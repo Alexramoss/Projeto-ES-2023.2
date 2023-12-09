@@ -4,7 +4,7 @@
   <img src="https://github.com/Alexramoss/Projeto-ES-2023.2/assets/93000795/d5406222-3948-4e09-b4fe-521dd665cfd9" alt="Logo CIn"     height=200px width=200px> <img src="https://github.com/Alexramoss/Projeto-ES-2023.2/assets/93000795/165974cb-1fe2-45b2-ba05-13d7c526f1cf" alt="Logo UFPE" height=200px width=300px>
 </h1>
 
-## Este repositório contém o projeto sobre x proposto na cadeira de Engenharia de Software(IF974) da Universidade Federal de Pernambuco.
+## Este repositório contém o projeto sobre x proposto na cadeira de Engenharia de Software(IF977) da Universidade Federal de Pernambuco.
 
 ### Docente: 
 <p align="left" vertical-align= "middle">Vínicius ...</p>
