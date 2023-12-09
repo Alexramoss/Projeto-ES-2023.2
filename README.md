@@ -6,13 +6,13 @@
 
 ## Este repositório contém o projeto sobre x proposto na cadeira de Engenharia de Software(IF974) da Universidade Federal de Pernambuco.
 
-## Docente: 
+### Docente: 
 <p align="left" vertical-align= "middle">Vínicius ...</p>
 
-## Semestre: 
+### Semestre: 
 <p align="left" vertical-align= "middle">2023.1</p>
 
-## Integrantes da Equipe:
+### Integrantes da Equipe:
 <p align="left" vertical-align= "middle">Alex Ramos da Silva 🌟 | alexramos1942@gmail.com & ars6@cin.ufpe.br</p>
 <p align="left" vertical-align= "middle">Luiz Carlos dos Santos [EMOJI]| email</p>
 <p align="left" vertical-align= "middle">Maria Vitoria Pereira Cordeiro [EMOJI] | email</p>
