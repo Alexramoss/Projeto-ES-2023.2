@@ -76,7 +76,13 @@ let createNewUser = async (req, res) => {
     };
     try {
         await registerService.createNewUser(newUser);
-        return res.redirect("/login");
+        // return res.redirect("/login");
+        return res.json({
+            message: 'Signup successful',
+            fullname: newUser.fullname
+            
+
+        })
     } catch (err) {
         req.flash("errors", err);
         return res.redirect("/register");

@@ -1,12 +1,14 @@
 const passport = require("passport")
 const passportLocal = require("passport-local")
 const loginService = require("../services/loginService")
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 let localStrategy = passportLocal.Strategy
 console.log("PASSEI AQUI")
 
 let initPassportLocal = () => {
-    passport.use(new localStrategy({
+    passport.use('login',new localStrategy({
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true 
@@ -20,7 +22,9 @@ let initPassportLocal = () => {
                 let user = await loginService.findUserByEmail(email);
                 if(!user){
                     console.log("problema aqui")
-                    return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
+                    // return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
+                    return done(null, false, { message: `This user email "${email}"" does not exist` })
+
                 }
                 console.log("problema aqui4")
 
@@ -30,11 +34,15 @@ let initPassportLocal = () => {
                     if (match === true){
                         console.log("problema aqui2")
 
-                        return done(null, user, null)
+                        // return done(null, user, null)
+                        return done(null, user, { message: "Successfully logged in"})
+
                     } else {
                         console.log("problema aqui3")
 
-                        return done(null, false, req.flash("errors", match))
+                        // return done(null, false, req.flash("errors", match))
+                        return done(null, false, { message: "Wrong password"})
+
 
                     }
                 }
@@ -59,6 +67,24 @@ passport.deserializeUser((id, done) => {
         return done(error, null)
     });
 });
+
+
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: 'TOP_SECRET',
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
 
 module.exports = {
     initPassportLocal: initPassportLocal

@@ -5,6 +5,7 @@ const { getHomePage } = require("../controllers/homePageController")
 const auth = require("../validation/authValidation")
 const passport = require("passport")
 const  { initPassportLocal }  = require("../controllers/passportLocalController")
+const jwt = require('jsonwebtoken')
 
 
 let router = express.Router();
@@ -19,12 +20,63 @@ let initWebRoutes = (app) => {
         console.log(req.flash('error')); // Log error flash messages
         console.log(req.flash('success')); // Log success flash messages
         next();
-    }, passport.authenticate('local', {
+    }, passport.authenticate('login', {
         successRedirect: '/',
         failureRedirect: '/login',
         successFlash: true,
         failureFlash: true
     }));
+
+    //secure route
+    router.get(
+        '/profile',
+        (req, res, next) => {
+            console.log(req.user)
+          res.json({
+            message: 'You made it to the secure route',
+            user: req.user,
+            token: req.query.secret_token
+          })
+        }
+      );
+
+
+    router.post(
+    '/signin',
+    async (req, res, next) => {
+        passport.authenticate(
+        'login',
+        async (err, user, info) => {
+            try {
+            if (err || !user) {
+                const error = new Error('An error occurred.');
+                console.log(user)
+                console.log(err.message)
+
+                return next(error);
+            }
+
+            req.login(
+                user,
+                { session: false },
+                async (error) => {
+                if (error) return next(error);
+
+                const body = { _id: user._id, email: user.email };
+                const token = jwt.sign({ user: body }, 'TOP_SECRET'); 
+                //You should not store sensitive information such as the user’s password in the token.
+
+                return res.json({ token });
+                }
+            );
+            } catch (error) {
+            return next(error);
+            }
+        }
+        )(req, res, next);
+    }
+    );
+
     router.get("/register", getPageRegister);
     router.post("/register", auth.validateRegister, createNewUser);
     router.post("/logout", postLogOut)
