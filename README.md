@@ -21,3 +21,7 @@
 ## Sobre o Projeto:
 
 ...
+
+## Links Importantes:
+<a href="[url](https://docs.google.com/document/d/1mTMhLnPbvr6UddJm-UBkjMJnM83Bjlby5gcwEHgpnyY/edit?usp=sharing)">Relatório do Projeto</a>
+
