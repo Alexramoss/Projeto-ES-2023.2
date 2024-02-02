@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser")
 const connectFlash = require("connect-flash")
 const session = require("express-session")
 const passport = require("passport")
+const secureRoute = require("./routes/secureRoutes")
+
 
 // const connection = require("./configs/connectDB")
 
@@ -45,6 +47,9 @@ app.use(passport.session());
 
 // init all web routes
 initWebRoutes(app);
+
+//init secure web routes
+app.use("/user", passport.authenticate('jwt', { session: false }), secureRoute);
 
 let port = process.env.PORT || 8080;
 app.listen(port, () =>console.log(`Building a login system with NodeJS is running on port ${port}!`));

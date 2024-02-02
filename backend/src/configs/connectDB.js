@@ -132,7 +132,31 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
+process.on('SIGINT', async () => {
+  try {
+    await pool.end();
+    console.log('Connection pool closed.');
+    process.exit(0); // Exit the application
+  } catch (err) {
+    console.error('Error closing connection pool:', err);
+    process.exit(1); // Exit the application with an error code
+  }
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1); // Exit the application with an error code
+});
+
+
 // Define your table creation SQL query
+const createStudentsTableQuery = `
+  CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    password VARCHAR(255),
+    fullname VARCHAR(45)
+)`;
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -170,6 +194,10 @@ const createTableQuery = `
     // Execute the table creation query
     const [createTableResults] = await connection.query(createTableQuery);
     console.log('Table created successfully:', createTableResults);
+    const [createStudentTableResults] = await connection.query(createStudentsTableQuery);
+    console.log('Table created successfully:', createStudentTableResults);
+
+
   } catch (err) {
     console.error('Error:', err);
   } finally {

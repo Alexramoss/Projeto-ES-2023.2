@@ -28,17 +28,17 @@ let initWebRoutes = (app) => {
     }));
 
     //secure route
-    router.get(
-        '/profile',
-        (req, res, next) => {
-            console.log(req.user)
-          res.json({
-            message: 'You made it to the secure route',
-            user: req.user,
-            token: req.query.secret_token
-          })
-        }
-      );
+    // router.get(
+    //     '/profile',
+    //     (req, res, next) => {
+    //         console.log(req.user)
+    //       res.json({
+    //         message: 'You made it to the secure route',
+    //         user: req.user,
+    //         token: req.query.secret_token
+    //       })
+    //     }
+    //   );
 
 
     router.post(
@@ -51,7 +51,7 @@ let initWebRoutes = (app) => {
             if (err || !user) {
                 const error = new Error('An error occurred.');
                 console.log(user)
-                console.log(err.message)
+                console.log(err)
 
                 return next(error);
             }
