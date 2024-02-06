@@ -133,13 +133,41 @@ const pool = mysql.createPool({
 });
 
 // Define your table creation SQL query
-const createTableQuery = `
-  CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    email VARCHAR(45) NOT NULL,
-    password VARCHAR(255),
-    fullname VARCHAR(45)
+const createStudentsTableQuery = `
+CREATE TABLE IF NOT EXISTS STUDENT(
+  RASTUD VARCHAR(5) PRIMARY KEY UNIQUE,
+  FULLNAME VARCHAR(100) NOT NULL,
+  EMAIL VARCHAR(100) NOT NULL,
+  PASSWORD VARCHAR(15) NOT NULL
 )`;
+
+const createClassesTableQuery = `
+CREATE TABLE IF NOT EXISTS CLASS(
+  IDCLASS INT PRIMARY KEY AUTO_INCREMENT,
+  CLASS CHAR(1) NOT NULL,
+  LETTER CHAR(1) NOT NULL,
+  MODALITY VARCHAR(13) NOT NULL
+)`;
+
+const createStudclassesTableQuery = `
+CREATE TABLE IF NOT EXISTS STUDCLASS(
+  ID_CLASS INT,
+  RA_STUD VARCHAR(5) UNIQUE,
+  CLASS CHAR(1) NOT NULL,
+  LETTER CHAR(1) NOT NULL,
+  MODALITY VARCHAR(13) NOT NULL,
+  FOREIGN KEY(RA_STUD) REFERENCES STUDENT(RASTUD),
+  FOREIGN KEY(ID_CLASS) REFERENCES CLASS(IDCLASS)
+)`; 
+
+const createCollaboratorsTableQuery = `
+CREATE TABLE IF NOT EXISTS COLLABORATOR(
+  RACOLLAB INT PRIMARY KEY UNIQUE,
+  FULLNAME VARCHAR(100) NOT NULL,
+  EMAIL VARCHAR(100) NOT NULL,
+  PASSWORD VARCHAR(15) NOT NULL
+)`;
+
 
 // Connect to MySQL to check if the database exists
 (async () => {
@@ -168,8 +196,15 @@ const createTableQuery = `
     console.log(`Using database: ${databaseName}`);
 
     // Execute the table creation query
-    const [createTableResults] = await connection.query(createTableQuery);
-    console.log('Table created successfully:', createTableResults);
+    const [createStudentTableResults] = await connection.query(createStudentsTableQuery);
+    console.log('Table created successfully:', createStudentTableResults);
+    const [createClassTableResults] = await connection.query(createClassesTableQuery);
+    console.log('Table created successfully:', createClassTableResults);
+    const [createStudclassTableResults] = await connection.query(createStudclassesTableQuery);
+    console.log('Table created successfully:', createStudclassTableResults);
+    const [createCollaboratorTableResults] = await connection.query(createCollaboratorsTableQuery);
+    console.log('Table created successfully:', createCollaboratorTableResults);
+
   } catch (err) {
     console.error('Error:', err);
   } finally {
@@ -180,3 +215,4 @@ const createTableQuery = `
 })();
 
 module.exports = pool;
+
