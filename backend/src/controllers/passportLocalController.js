@@ -103,34 +103,7 @@ new JWTstrategy(
       }
     }
   )
-// const jwtOptions = {  
-//     // Telling Passport to check authorization headers for JWT
-//     jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
-//     // Telling Passport where to find the secret
-//     secretOrKey: 'TOP_SECRET',
-//     passReqToCallback: true, //<= Important, so that the verify function can accept the req param ie verify(req,payload,done)
-//   };
-//   const jwtLogin = new JWTstrategy(jwtOptions, function(req, payload, done) {
-//     User.findById(payload._id, function(err, user) {
-//       if (err) { 
-//         console.log("passeeeeei aquiiiii")
 
-//           return done(err, false); 
-//     }
-
-//       if (user) {
-//           console.log("passeeeeei aquiiiii")
-//         req.user = user; // <= Add this line
-//         done(null, user);
-//       } else {
-//         console.log("passeeeeei aquiiiii")
-
-//         done(null, false);
-        
-//       }
-//     });
-//   });
-//   passport.use(jwtLogin)
   
 
 module.exports = {

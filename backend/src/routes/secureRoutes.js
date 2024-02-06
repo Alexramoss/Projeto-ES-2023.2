@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get(
+router.get( // remember that the path needs to be preceded by a '/user'
   '/profile',
   (req, res, next) => {
     res.json({
