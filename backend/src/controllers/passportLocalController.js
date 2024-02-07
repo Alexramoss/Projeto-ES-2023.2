@@ -9,26 +9,27 @@ console.log("PASSEI AQUI")
 
 let initPassportLocal = () => {
     passport.use('login',new localStrategy({
-        usernameField: 'email',
+        usernameField: 'id',
         passwordField: 'password',
         passReqToCallback: true 
     }, 
-        async (req, email, password, done) => {
+        async (req, id, password, done) => {
             console.log("PASSEI AQUI2")
 
             try {
                 console.log("problema aqui5")
-                console.log("*****aqui init passport local "+ email)
+                console.log("*****aqui init passport local "+ id)
                 console.log("*****aqui "+ password)
 
 
-                let user = await loginService.findUserByEmail(email);
-                
+                // let user = await loginService.findUserByEmail(email);
+                let user = await loginService.findUserById(id);
+
                 if(!user){
-                  console.log(`This user email "${email}"" does not exist`)
+                  console.log(`This user email "${id}"" does not exist`)
 
                     // return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
-                    return done(null, false, { message: `This user email "${email}"" does not exist` })
+                    return done(null, false, { message: `This user email "${id}"" does not exist` })
 
                 }
 

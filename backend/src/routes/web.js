@@ -46,6 +46,7 @@ let initWebRoutes = (app) => {
     async (req, res, next) => {
         passport.authenticate(
         'login',
+        { id: req.body.id }, // Specify the key-value pair for the user id
         async (err, user, info) => {
             try {
             if (err || !user) {
@@ -63,7 +64,7 @@ let initWebRoutes = (app) => {
                 if (error) return next(error);
                 console.log("signin route "+ JSON.stringify(user))
 
-                const body = { _id: user.RASTUD, name: user.FULLNAME, email: user.EMAIL };
+                const body = { _id: user.RASTUD, email: user.EMAIL };
                 console.log(JSON.stringify(body))
                 const token = jwt.sign({ user: body }, 'TOP_SECRET'); 
                 //You should not store sensitive information such as the user’s password in the token.
