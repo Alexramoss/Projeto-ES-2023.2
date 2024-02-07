@@ -106,17 +106,20 @@ const bcryptjs = require("bcryptjs");
 let findUserByEmail = (email) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log('problema');
+      console.log("email parametro find by email" + email)
+      console.log('tentando conectar com student e procurar por email');
       const [rows] = await DBConnection.query(
-        'SELECT * FROM `users` WHERE `email` = ?',
+        'SELECT * FROM `STUDENT` WHERE `EMAIL` = ?',
         [email]
       );
+      
 
       let user = rows[0];
      
       resolve(user);
-      console.log(user)
-      console.log('problema2');
+      console.log("printando o user recuperado pela find by email"+ user)
+      console.log(JSON.stringify(user))
+
     } catch (err) {
       reject(err);
       console.log(err.message);
@@ -126,8 +129,11 @@ let findUserByEmail = (email) => {
 
 let comparePasswordUser = (user, password) => {
   return new Promise(async (resolve, reject) => {
+    console.log("PASSWORD" + password)
+    console.log("PASSWORD  11" + JSON.stringify(user))
+
     try {
-      let isMatch = await bcryptjs.compare(password, user.password);
+      let isMatch = await bcryptjs.compare(password, user.PASSWORD);
       if (isMatch) resolve(true);
       resolve("The password you've entered is incorrect");
     } catch (e) {
@@ -141,7 +147,7 @@ let findUserById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const [rows] = await DBConnection.query(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM STUDENT WHERE RASTUD = ?",
         [id]
       );
 

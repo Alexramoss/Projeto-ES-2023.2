@@ -61,8 +61,10 @@ let initWebRoutes = (app) => {
                 { session: false },
                 async (error) => {
                 if (error) return next(error);
+                console.log("signin route "+ JSON.stringify(user))
 
-                const body = { _id: user._id, email: user.email };
+                const body = { _id: user.RASTUD, name: user.FULLNAME, email: user.EMAIL };
+                console.log(JSON.stringify(body))
                 const token = jwt.sign({ user: body }, 'TOP_SECRET'); 
                 //You should not store sensitive information such as the user’s password in the token.
 

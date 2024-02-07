@@ -18,21 +18,29 @@ let initPassportLocal = () => {
 
             try {
                 console.log("problema aqui5")
+                console.log("*****aqui init passport local "+ email)
+                console.log("*****aqui "+ password)
+
 
                 let user = await loginService.findUserByEmail(email);
+                
                 if(!user){
-                    console.log("problema aqui")
+                  console.log(`This user email "${email}"" does not exist`)
+
                     // return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
                     return done(null, false, { message: `This user email "${email}"" does not exist` })
 
                 }
-                console.log("problema aqui4")
 
                 if(user) {
+
+                  console.log('*********o user é' + JSON.stringify(user) + '********')
+                  
+
                     //compare password
                     let match = await loginService.comparePasswordUser(user, password)
                     if (match === true){
-                        console.log("problema aqui2")
+                        console.log("passou da comparepassword user")
 
                         // return done(null, user, null)
                         
@@ -58,7 +66,8 @@ let initPassportLocal = () => {
 }
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+  console.log("serialize user " + JSON.stringify(user.id))
+    done(null, user.RASTUD);
     
 });
 
@@ -80,6 +89,7 @@ passport.use(
     },
     async (token, done) => {
       try {
+        console.log("AAAAAA"+JSON.stringify(token.user))
         return done(null, token.user);
       } catch (error) {
         done(error);
@@ -97,6 +107,8 @@ new JWTstrategy(
         if (!token.user) {
           return done(null, false, { message: 'User not found in token' });
         }
+        console.log("the token user is "+JSON.stringify(token.user))
+
         return done(null, token.user);
       } catch (error) {
         return done(error);
