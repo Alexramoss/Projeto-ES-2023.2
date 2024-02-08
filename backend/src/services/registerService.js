@@ -1,5 +1,6 @@
 const DBConnection = require("../configs/connectDB")
-const bcryptjs = require("bcryptjs")
+const bcryptjs = require("bcryptjs");
+const { use } = require("passport");
 
 function generateRandomNumber() {
     return Math.floor(10000 + Math.random() * 90000);
@@ -18,8 +19,16 @@ let createNewUser = (data) => {
                 let salt = bcryptjs.genSaltSync(10);
                 const randomValue = generateRandomNumber();
 
-                let userItem = {
+                let studentItem = {
                     RASTUD: randomValue.toString().padStart(5, '0'), // Format random value as string with leading zeros
+                    fullname: data.fullname,
+                    email: data.email,
+                    password: bcryptjs.hashSync(data.password, salt)
+                };
+
+                let collaboratorItem = {
+                    RACOLLAB: randomValue.toString().padStart(5, '0'), // Format random value as string with leading zeros
+                    role: data.role,
                     fullname: data.fullname,
                     email: data.email,
                     password: bcryptjs.hashSync(data.password, salt),
@@ -27,20 +36,26 @@ let createNewUser = (data) => {
 
                 // Use pool.query for better connection management
                 // const [rows, fields] = await DBConnection.promise().query('INSERT INTO users SET ?', userItem);
-                if(!data.isstudent){
-                    console.log("passei aqui e rolou")
+                if(data.isStudent === "true"){
+                    console.log("user is student")
 
-                    const [rows, fields] = await DBConnection.query('INSERT INTO STUDENT SET ?', userItem);
-                    resolve("Create a new user successful");
+                    const [rows, fields] = await DBConnection.query('INSERT INTO STUDENT SET ?', studentItem);
+                    resolve("Create a new student successful");
+                    console.log(JSON.stringify(fields))
+
+                } if(data.isStudent === "false") {
+                    console.log("user is not student")
+                    const [rows, fields] = await DBConnection.query('INSERT INTO COLLABORATOR SET ?', collaboratorItem);
+                    resolve("Create a new collaborator successful");
+                    console.log(JSON.stringify(fields))
 
                 }
-                console.log("passei aqui e nao rolou")
 
 
             }
         } catch (error) {
             reject(`Error creating a new user: ${error}`);
-            console.log(error.message)
+            console.log("error adding user"+ error.message)
         }
     });
 };

@@ -81,7 +81,9 @@ let initWebRoutes = (app) => {
     );
 
     router.get("/register", getPageRegister);
-    router.post("/register", auth.validateRegister, createNewUser);
+    // router.post("/register", auth.validateRegister, createNewUser);
+    router.post("/register", createNewUser);
+
     router.post("/logout", postLogOut)
     return app.use("/", router);
 };

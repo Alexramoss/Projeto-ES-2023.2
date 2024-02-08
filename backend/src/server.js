@@ -18,6 +18,10 @@ const secureRoute = require("./routes/secureRoutes")
 
 let app = express();
 
+//Enable express json
+app.use(express.json());
+
+
 //Enable body parser post data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

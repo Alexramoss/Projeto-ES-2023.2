@@ -73,11 +73,13 @@ let createNewUser = async (req, res) => {
         fullname: req.body.fullName,
         email: req.body.email,
         password: req.body.password,
-        isstudent: req.body.isstudent
+        isStudent: req.body.isStudent,
+        role: req.body.role
     };
     try {
         await registerService.createNewUser(newUser);
         // return res.redirect("/login");
+        print("New user created:" + JSON.stringify(newUser))
         return res.json({
             message: 'Signup successful',
             fullname: newUser.fullname, 
