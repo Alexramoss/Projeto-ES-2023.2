@@ -143,7 +143,7 @@ let comparePasswordUser = (user, password) => {
   });
 };
 
-let findUserById = (id) => {
+let findStudentById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const [rows] = await DBConnection.query(
@@ -160,8 +160,26 @@ let findUserById = (id) => {
   });
 };
 
+let findCollaboratorById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const [rows] = await DBConnection.query(
+        "SELECT * FROM COLLABORATOR WHERE RACOLLAB = ?",
+        [id]
+      );
+
+      let user = rows[0];
+      resolve(user);
+    } catch (e) {
+      reject(e);
+      console.log(e.message);
+    }
+  });
+}
+
 module.exports = {
   findUserByEmail: findUserByEmail,
   comparePasswordUser: comparePasswordUser,
-  findUserById: findUserById,
+  findStudentById: findStudentById,
+  findCollaboratorById: findCollaboratorById
 };

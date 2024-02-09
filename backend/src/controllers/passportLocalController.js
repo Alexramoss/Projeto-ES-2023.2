@@ -11,7 +11,7 @@ let initPassportLocal = () => {
     passport.use('login',new localStrategy({
         usernameField: 'id',
         passwordField: 'password',
-        passReqToCallback: true 
+        passReqToCallback: true
     }, 
         async (req, id, password, done) => {
             console.log("PASSEI AQUI2")
@@ -23,7 +23,16 @@ let initPassportLocal = () => {
 
 
                 // let user = await loginService.findUserByEmail(email);
-                let user = await loginService.findUserById(id);
+                let user = null
+                if(req.body.role === "student"){
+                  console.log("appeared")
+                  user = await loginService.findStudentById(id);
+                }; 
+
+                if (req.body.role === "collaborator"){
+                  user = await loginService.findCollaboratorById(id);
+
+                }
 
                 if(!user){
                   console.log(`This user email "${id}"" does not exist`)
@@ -73,7 +82,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    loginService.findUserById(id).then((user) => {
+    loginService.findStudentById(id).then((user) => {
         return done(null, user);
     }).catch(error => {
         return done(error, null)
