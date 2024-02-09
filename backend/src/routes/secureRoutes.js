@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const  { authCollaborator } = require("../validation/authCollaborator")
+const auth = require("../validation/authValidation")
+const { getPageRegister, createNewUser } = require("../controllers/registerController")
 
 router.get( // remember that the path needs to be preceded by a '/user'
   '/profile',
@@ -15,5 +17,9 @@ router.get( // remember that the path needs to be preceded by a '/user'
 
   }
 );
+
+router.post("/register", [authCollaborator, auth.validateRegister], createNewUser);
+
+
 
 module.exports = router;

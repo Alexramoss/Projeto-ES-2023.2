@@ -79,7 +79,7 @@ let createNewUser = async (req, res) => {
     try {
         await registerService.createNewUser(newUser);
         // return res.redirect("/login");
-        print("New user created:" + JSON.stringify(newUser))
+        console.log("New user created:" + JSON.stringify(newUser))
         return res.json({
             message: 'Signup successful',
             fullname: newUser.fullname, 
@@ -90,6 +90,7 @@ let createNewUser = async (req, res) => {
     } catch (err) {
         req.flash("errors", err);
         return res.redirect("/register");
+        console.log("to dizendo que da erro")
     }
 };
 module.exports = {
