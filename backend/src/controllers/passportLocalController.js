@@ -52,8 +52,11 @@ let initPassportLocal = () => {
                     if (match === true){
                         console.log("passou da comparepassword user")
 
+                         // Generate JWT token
+                        // const token = jwt.sign({ id: user.id, role: req.body.role }, 'TOP_SECRET');
                         // return done(null, user, null)
                         
+                        // return done(null, { user, token }, { message: "Successfully logged in"})
                         return done(null, user, { message: "Successfully logged in"})
 
                     } else {
@@ -107,27 +110,29 @@ passport.use(
     }
   )
 );
-new JWTstrategy(
-    {
-      secretOrKey: 'TOP_SECRET',
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
-    },
-    async (token, done) => {
-      try {
-        if (!token.user) {
-          return done(null, false, { message: 'User not found in token' });
-        }
-        console.log("the token user is "+JSON.stringify(token.user))
+// new JWTstrategy(
+//     {
+//       secretOrKey: 'TOP_SECRET',
+//       jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+//     },
+//     async (token, done) => {
+//       try {
+//         if (!token.user) {
+//           return done(null, false, { message: 'User not found in token' });
+//         }
+//         console.log("the token user is "+JSON.stringify(token.user))
 
-        return done(null, token.user);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
+//         return done(null, token.user);
+//       } catch (error) {
+//         return done(error);
+//       }
+//     }
+//   )
 
   
 
 module.exports = {
     initPassportLocal: initPassportLocal
 }
+
+

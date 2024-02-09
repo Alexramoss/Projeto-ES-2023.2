@@ -27,18 +27,6 @@ let initWebRoutes = (app) => {
         failureFlash: true
     }));
 
-    //secure route
-    router.get(
-        '/profile',
-        (req, res, next) => {
-            console.log(req.user)
-          res.json({
-            message: 'You made it to the secure route',
-            user: req.user,
-            token: req.query.secret_token
-          })
-        }
-      );
 
 
     router.post(
@@ -64,7 +52,7 @@ let initWebRoutes = (app) => {
                 if (error) return next(error);
                 console.log("signin route "+ JSON.stringify(user))
 
-                const body = { _id: user.RASTUD, email: user.EMAIL };
+                const body = { _id: (user.RASTUD || user.RACOLLAB), email: user.EMAIL, role: req.body.role };
                 console.log(JSON.stringify(body))
                 const token = jwt.sign({ user: body }, 'TOP_SECRET'); 
                 //You should not store sensitive information such as the user’s password in the token.
