@@ -20,7 +20,12 @@ let createNewUser = async (req, res) => {
             errorsArr.push(item.msg);
         });
         req.flash("errors", errorsArr);
-        return res.redirect("/register");
+        return res.json({
+            message: 'Signup error',
+            errors: errorsArr
+            
+
+        })
     }
 
     //create a new user
@@ -44,7 +49,13 @@ let createNewUser = async (req, res) => {
         })
     } catch (err) {
         req.flash("errors", err);
-        return res.redirect("/register");
+        return res.json({
+            message: 'Signup failed',
+            errors: err, 
+            
+            
+
+        })
     }
 };
 
