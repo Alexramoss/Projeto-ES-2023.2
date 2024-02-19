@@ -1,53 +1,8 @@
 const { validationResult } = require("express-validator");
 const registerService = require("../services/registerService")
+const editUserService = require("../services/editUserService")
 
-// let getRegisterPage = (req, res) => {
-//     res.render("register.ejs", {
-//         errors: req.flash("errors")
-//     })
-// }
 
-// let createNewUser = (req, res) => {
-//     //validate all required fields 
-//     let errorsArr = [];
-//     let validationErrors = validationResult(req);
-//     if (!validationErrors.isEmpty()) {
-//         let errors = Object.values(validationErrors.mapped());
-//         errors.forEach((item) => {
-//             errorsArr.push(item.msg);
-//         });
-
-//         req.flash("errors", errorsArr);
-//         return res.redirect("/register");
-
-//     }
-    
-//     //create a new user
-//     try {
-//         let newUser = {
-//             fullname: req.body.fullname,
-//             email: req.body.email,
-//             password: req.body.password
-//         }
-
-//         await registerService.createNewUser(newUser);
-//         return res.redirect("/login");
-
-//     } catch (e) {
-//         req.flash("errors", errorsArr);
-//         return res.redirect("/register");
- 
-//     }
-
-// }
-
-// module.exports = {
-//     getRegisterPage: getRegisterPage,
-//     createNewUser: createNewUser
-// }
-
-// import registerService from "./../services/registerService";
-// import { validationResult } from "express-validator";
 
 let getPageRegister = (req, res) => {
     return res.render("register.ejs", {
@@ -90,10 +45,31 @@ let createNewUser = async (req, res) => {
     } catch (err) {
         req.flash("errors", err);
         return res.redirect("/register");
-        console.log("to dizendo que da erro")
     }
 };
+
+let studentsRegister = async (req, res) => { //the "register" a student does after he's already been registered by a collaborator
+    const { RASTUD } = req.params;
+    // const { PASSWORD } = req.body;
+    let PASSWORD = req.body.password;
+    let ISSTUDENT = req.body.isStudent;
+
+
+    try {
+       await editUserService.updatePassword(RASTUD, PASSWORD, ISSTUDENT)
+      res.json({ message: 'Password updated successfully' });
+
+    // } catch (err) {
+    //     req.flash("errors", err);
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+    // }
+    
+    }
+
+}
 module.exports = {
     getPageRegister: getPageRegister,
-    createNewUser: createNewUser
+    createNewUser: createNewUser,
+    studentsRegister
 };

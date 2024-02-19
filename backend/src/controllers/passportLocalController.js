@@ -25,11 +25,13 @@ let initPassportLocal = () => {
                 // let user = await loginService.findUserByEmail(email);
                 let user = null
                 if(req.body.role === "student"){
-                  console.log("appeared")
+                  console.log("appeared student")
                   user = await loginService.findStudentById(id);
                 }; 
 
                 if (req.body.role === "collaborator"){
+                  console.log("appeared collaborator")
+
                   user = await loginService.findCollaboratorById(id);
 
                 }
@@ -38,7 +40,7 @@ let initPassportLocal = () => {
                   console.log(`This user email "${id}"" does not exist`)
 
                     // return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
-                    return done(null, false, { message: `This user email "${id}"" does not exist` })
+                    return done(null, false, { message: `This user id "${id}"" does not exist` })
 
                 }
 
@@ -49,6 +51,8 @@ let initPassportLocal = () => {
 
                     //compare password
                     let match = await loginService.comparePasswordUser(user, password)
+                    console.log(user.PASSWORD)
+                    console.log(password)
                     if (match === true){
                         console.log("passou da comparepassword user")
 

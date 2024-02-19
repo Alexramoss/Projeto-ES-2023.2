@@ -238,6 +238,7 @@ CREATE TABLE IF NOT EXISTS COLLABORATOR(
     } else {
       // Database already exists, switch to it
       await connection.query(`USE ${databaseName}`);
+      console.log("using " + databaseName)
     }
 
     console.log(`Using database: ${databaseName}`);
