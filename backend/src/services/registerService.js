@@ -111,13 +111,13 @@ let createNewUser = async (data) => {
         console.log("Creating a new user...");
         
         // Check if email already exists
-        let emailExists = await checkExistEmail(data.email, data.isStudent);
+        // let emailExists = await checkExistEmail(data.email, data.isStudent);
 
-        if (emailExists) {
-            throw new Error(`This email "${data.email}" is already registered. Please choose another email.`);
-        }
+        // if (emailExists) {
+        //     throw new Error(`This email "${data.email}" is already registered. Please choose another email.`);
+        // }
 
-        console.log("Email is unique. Proceeding with user creation...");
+        // console.log("Email is unique. Proceeding with user creation...");
 
         let salt = bcryptjs.genSaltSync(10);
 
@@ -155,6 +155,17 @@ let createNewUser = async (data) => {
                 if (rows.affectedRows > 0) {
                     inserted = true;
                     console.log("User inserted successfully!");
+
+                     // Construct the newUser object
+                    const newUser = {
+                        fullname: userItem.fullname,
+                        email: userItem.email,
+                        id: data.isStudent === "true" ? userItem.RASTUD : userItem.RACOLLAB,
+                        role: data.isStudent === "false" ? userItem.role : undefined // Include role only if isStudent is "false"
+                    };
+
+                    console.log("User creation successful.");
+                    return newUser;
                 }
             } catch (error) {
                 if (error.code === 'ER_DUP_ENTRY') {

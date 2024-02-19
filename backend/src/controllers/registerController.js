@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const registerService = require("../services/registerService")
 const editUserService = require("../services/editUserService")
+const nodemailerConfig = require("../configs/nodemailerConfig")
 
 
 
@@ -37,9 +38,12 @@ let createNewUser = async (req, res) => {
         role: req.body.role
     };
     try {
-        await registerService.createNewUser(newUser);
+        let user = await registerService.createNewUser(newUser);
         // return res.redirect("/login");
         console.log("New user created:" + JSON.stringify(newUser))
+
+        nodemailerConfig.sendEmail(user)
+
         return res.json({
             message: 'Signup successful',
             fullname: newUser.fullname, 
