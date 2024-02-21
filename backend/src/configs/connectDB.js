@@ -150,64 +150,74 @@ process.on('unhandledRejection', (reason, promise) => {
 
 
 // Define your table creation SQL query
-const createStudentsTableQuery = `
-CREATE TABLE IF NOT EXISTS STUDENT(
-  RASTUD VARCHAR(5) PRIMARY KEY UNIQUE,
-  FULLNAME VARCHAR(100) NOT NULL,
-  EMAIL VARCHAR(100) NOT NULL,
-  PASSWORD VARCHAR(255) NOT NULL
-)`;
-
-
-const modifyRASTUDQuery = `
--- Modify the RASTUD column in the STUDENT table
-ALTER TABLE STUDENT
-MODIFY RASTUD VARCHAR(255);
-`;
-
-const modifyPasswordQuery = `
--- Modify the PASSWORD column in the STUDENT table
-ALTER TABLE STUDENT
-MODIFY PASSWORD VARCHAR(255);
-`;
-
-const recreateForeignKeyQuery = `
--- Recreate the foreign key constraint
-ALTER TABLE STUDCLASS
-ADD CONSTRAINT fk_studclass_student FOREIGN KEY (RA_STUD) REFERENCES STUDENT (RASTUD);
-`;
-
-
-// Then execute each query separately
-
-
-
 const createClassesTableQuery = `
 CREATE TABLE IF NOT EXISTS CLASS(
   IDCLASS INT PRIMARY KEY AUTO_INCREMENT,
-  CLASS CHAR(1) NOT NULL,
-  LETTER CHAR(1) NOT NULL,
-  MODALITY VARCHAR(13) NOT NULL
+  CLASSNAME VARCHAR(100) NOT NULL,
+  LETTER VARCHAR(100) NOT NULL,
+  MODALITY VARCHAR(100) NOT NULL
 )`;
 
-const createStudclassesTableQuery = `
-CREATE TABLE IF NOT EXISTS STUDCLASS(
+const createStudentsTableQuery = `
+CREATE TABLE IF NOT EXISTS STUDENT(
+  RASTUD VARCHAR(255) PRIMARY KEY UNIQUE,
   ID_CLASS INT,
-  RA_STUD VARCHAR(5) UNIQUE,
-  CLASS CHAR(1) NOT NULL,
-  LETTER CHAR(1) NOT NULL,
-  MODALITY VARCHAR(13) NOT NULL,
-  FOREIGN KEY(RA_STUD) REFERENCES STUDENT(RASTUD),
-  FOREIGN KEY(ID_CLASS) REFERENCES CLASS(IDCLASS)
-)`; 
+  FULLNAME VARCHAR(100) NOT NULL,
+  EMAIL VARCHAR(100) NOT NULL,
+  PASSWORD VARCHAR(255) NOT NULL,
+  FOREIGN KEY (ID_CLASS) REFERENCES CLASS(IDCLASS)
+)`;
 
 const createCollaboratorsTableQuery = `
 CREATE TABLE IF NOT EXISTS COLLABORATOR(
   RACOLLAB VARCHAR(255) PRIMARY KEY UNIQUE,
-  ROLE VARCHAR(100),
+  FULLNAME VARCHAR(100) NOT NULL,
+  ROLE VARCHAR(100) NOT NULL,
+  EMAIL VARCHAR(100),
+  PASSWORD VARCHAR(255) NOT NULL
+)`;
+
+const createTeachersTableQuery = `
+CREATE TABLE IF NOT EXISTS TEACHER(
+  RATEACH VARCHAR(255) PRIMARY KEY UNIQUE,
   FULLNAME VARCHAR(100) NOT NULL,
   EMAIL VARCHAR(100),
   PASSWORD VARCHAR(255) NOT NULL
+)`;
+
+const createNotesTableQuery = `
+CREATE TABLE IF NOT EXISTS NOTE(
+  RASTUD VARCHAR(255),
+  LINGUA_PORTUGUESA VARCHAR(100),
+  ARTES VARCHAR(100),
+  EDUCACAO_FISICA VARCHAR(100),
+  MATEMATICA VARCHAR(100),
+  BIOLOGIA VARCHAR(100),
+  FISICA VARCHAR(100),
+  QUIMICA VARCHAR(100),
+  HISTORIA VARCHAR(100),
+  GEOGRAFIA VARCHAR(100),
+  FILOSOFIA VARCHAR(100),
+  SOCIOLOGIA VARCHAR(100),
+  ELETIVA VARCHAR(100),
+  RESULTADO VARCHAR(100),
+  FOREIGN KEY(RASTUD) REFERENCES STUDENT(RASTUD) ON DELETE CASCADE
+)`;
+
+const createEventsTableQuery = `
+CREATE TABLE IF NOT EXISTS EVENT(
+  DESCRIPTION VARCHAR(255),
+  DATA VARCHAR(255),
+  RA_TEACH VARCHAR(255),
+  FOREIGN KEY(RA_TEACH) REFERENCES TEACHER(RATEACH)
+)`;
+
+const createMattersTableQuery = `
+CREATE TABLE IF NOT EXISTS MATTER(
+  MATTER VARCHAR(255),
+  RA_TEACH VARCHAR(255),
+  ID_CLASS VARCHAR(255),
+  FOREIGN KEY(RA_TEACH) REFERENCES TEACHER(RATEACH)
 )`;
 
 
@@ -239,16 +249,20 @@ CREATE TABLE IF NOT EXISTS COLLABORATOR(
     console.log(`Using database: ${databaseName}`);
 
     // Execute the table creation query
-    const [createStudentTableResults] = await connection.query(createStudentsTableQuery);
-    console.log('Table created successfully:', createStudentTableResults);
-
-
     const [createClassTableResults] = await connection.query(createClassesTableQuery);
     console.log('Table created successfully:', createClassTableResults);
-    const [createStudclassTableResults] = await connection.query(createStudclassesTableQuery);
-    console.log('Table created successfully:', createStudclassTableResults);
+    const [createStudentTableResults] = await connection.query(createStudentsTableQuery);
+    console.log('Table created successfully:', createStudentTableResults);
     const [createCollaboratorTableResults] = await connection.query(createCollaboratorsTableQuery);
     console.log('Table created successfully:', createCollaboratorTableResults);
+    const [createTeacherTableResults] = await connection.query(createTeachersTableQuery);
+    console.log('Table created successfully:', createTeacherTableResults);
+    const [createNoteTableResults] = await connection.query(createNotesTableQuery);
+    console.log('Table created successfully:', createNoteTableResults);
+    const [createEventTableResults] = await connection.query(createEventsTableQuery);
+    console.log('Table created successfully:', createEventTableResults);
+    const [createMatterTableResults] = await connection.query(createMattersTableQuery);
+    console.log('Table created successfully:', createMatterTableResults);
 
   } catch (err) {
     console.error('Error:', err);
@@ -260,4 +274,3 @@ CREATE TABLE IF NOT EXISTS COLLABORATOR(
 })();
 
 module.exports = pool;
-

@@ -7,12 +7,12 @@
 }
 
 .image-left {
-    background-image: url("../images/background.jpg");
-    height: 600px;
+    background-image: url("../images/eduvision.png");
+    height: 400px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 5px 3px rgb(255, 0, 0);
     opacity: 0.9;
     border-radius: 3px;
 }

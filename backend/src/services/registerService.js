@@ -2,6 +2,7 @@
 // const bcryptjs = require("bcryptjs");
 // const { use } = require("passport");
 
+<<<<<<< HEAD
 // function generateRandomNumber() {
 //     return Math.floor(10000 + Math.random() * 90000);
 //   } 
@@ -101,17 +102,30 @@
 
 const DBConnection = require("../configs/connectDB");
 const bcryptjs = require("bcryptjs");
+=======
+let createNewUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Check if email already exists
+            let emailExists = await checkExistEmail(data.email);
+>>>>>>> database-int
 
 function generateRandomNumber() {
     return Math.floor(10000 + Math.random() * 90000);
 }
 
+<<<<<<< HEAD
 let createNewUser = async (data) => {
     try {
         console.log("Creating a new user...");
         
         // Check if email already exists
         // let emailExists = await checkExistEmail(data.email, data.isStudent);
+=======
+                // Use pool.query for better connection management
+                // const [rows, fields] = await DBConnection.promise().query('INSERT INTO users SET ?', userItem);
+                const [rows, fields] = await DBConnection.query('INSERT INTO student SET ?', userItem);
+>>>>>>> database-int
 
         // if (emailExists) {
         //     throw new Error(`This email "${data.email}" is already registered. Please choose another email.`);
@@ -190,6 +204,7 @@ let createNewUser = async (data) => {
     }
 };
 
+<<<<<<< HEAD
 let checkExistEmail = async (email, isStudent) => {
     try {
         console.log("Checking if email exists...");
@@ -197,6 +212,14 @@ let checkExistEmail = async (email, isStudent) => {
         let query = isStudent === "true" ?
             'SELECT COUNT(*) AS count FROM STUDENT WHERE EMAIL = ?' :
             'SELECT COUNT(*) AS count FROM COLLABORATOR WHERE EMAIL = ?';
+=======
+let checkExistEmail = (email) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Use pool.query for better connection management
+            // const [rows, fields] = await DBConnection.promise().query('SELECT * FROM `users` WHERE `email` = ?', [email]);
+            const [rows, fields] = await DBConnection.query('SELECT * FROM `student` WHERE `email` = ?', [email]);
+>>>>>>> database-int
 
         const [rows] = await DBConnection.query(query, [email]);
         const emailExists = rows[0].count > 0;
@@ -210,5 +233,10 @@ let checkExistEmail = async (email, isStudent) => {
 };
 
 module.exports = {
+<<<<<<< HEAD
     createNewUser
 };
+=======
+    createNewUser: createNewUser
+};
+>>>>>>> database-int
