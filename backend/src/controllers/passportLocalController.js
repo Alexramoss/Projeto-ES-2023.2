@@ -8,10 +8,11 @@ console.log("PASSEI AQUI")
 let initPassportLocal = () => {
     passport.use(new localStrategy({
         usernameField: 'email',
+        usernameField: 'RASTUD',
         passwordField: 'password',
         passReqToCallback: true 
     }, 
-        async (req, email, password, done) => {
+        async (req, RASTUD, email, password, done) => {
             console.log("PASSEI AQUI2")
 
             try {
@@ -22,6 +23,7 @@ let initPassportLocal = () => {
                     console.log("problema aqui")
                     return done(null, false, req.flash("errors", `This user email "${email}"" does not exist`))
                 }
+                
                 console.log("problema aqui4")
 
                 if(user) {
