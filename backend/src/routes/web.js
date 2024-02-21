@@ -44,6 +44,7 @@ let initWebRoutes = (app) => {
                 const error = new Error('An error occurred.');
                 console.log(user)
                 console.log(err)
+                console.log(info)
 
                 return next(error);
             }
