@@ -109,11 +109,7 @@ let findUserByEmail = (email) => {
       console.log("email parametro find by email" + email)
       console.log('tentando conectar com student e procurar por email');
       const [rows] = await DBConnection.query(
-<<<<<<< HEAD
         'SELECT * FROM `STUDENT` WHERE `EMAIL` = ?',
-=======
-        'SELECT * FROM `student` WHERE `email` = ?',
->>>>>>> database-int
         [email]
       );
       
@@ -151,11 +147,7 @@ let findStudentById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const [rows] = await DBConnection.query(
-<<<<<<< HEAD
-        "SELECT * FROM STUDENT WHERE RASTUD = ?",
-=======
         "SELECT * FROM student WHERE id = ?",
->>>>>>> database-int
         [id]
       );
 
@@ -188,11 +180,6 @@ let findCollaboratorById = (id) => {
 module.exports = {
   findUserByEmail: findUserByEmail,
   comparePasswordUser: comparePasswordUser,
-<<<<<<< HEAD
   findStudentById: findStudentById,
   findCollaboratorById: findCollaboratorById
 };
-=======
-  findUserById: findUserById,
-};
->>>>>>> database-int
