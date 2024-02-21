@@ -63,15 +63,15 @@ let createNewUser = async (req, res) => {
     }
 };
 
-let studentsRegister = async (req, res) => { //the "register" a student does after he's already been registered by a collaborator
-    const { RASTUD } = req.params;
+let editUserPassword = async (req, res) => { //the "register" a student does after he's already been registered by a collaborator
+    const { ID } = req.params;
     // const { PASSWORD } = req.body;
     let PASSWORD = req.body.password;
     let ISSTUDENT = req.body.isStudent;
 
 
     try {
-       await editUserService.updatePassword(RASTUD, PASSWORD, ISSTUDENT)
+       await editUserService.updatePassword(ID, PASSWORD, ISSTUDENT)
       res.json({ message: 'Password updated successfully' });
 
     // } catch (err) {
@@ -86,5 +86,5 @@ let studentsRegister = async (req, res) => { //the "register" a student does aft
 module.exports = {
     getPageRegister: getPageRegister,
     createNewUser: createNewUser,
-    studentsRegister
+    editUserPassword: editUserPassword
 };

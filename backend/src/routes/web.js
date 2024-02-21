@@ -1,6 +1,6 @@
 const express = require("express")
 const {checkLoggedIn, getLoginPage, checkLoggedOut, postLogOut } = require("../controllers/loginController")
-const { getPageRegister, createNewUser, studentsRegister } = require("../controllers/registerController")
+const { getPageRegister, createNewUser, editUserPassword } = require("../controllers/registerController")
 const { getHomePage } = require("../controllers/homePageController")
 const auth = require("../validation/authValidation")
 const passport = require("passport")
@@ -71,7 +71,7 @@ let initWebRoutes = (app) => {
     router.get("/register", getPageRegister);
     router.post("/register", auth.validateRegister, createNewUser);
     // router.post("/register", createNewUser);
-    router.put("/studentregister/:RASTUD", studentsRegister); //when the student creates its own password
+    router.put("/editpassword/:ID", auth.validatePasswordUpdate, editUserPassword); //when the student creates its own password
     router.post("/logout", postLogOut)
     return app.use("/", router);
 };

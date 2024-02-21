@@ -158,11 +158,6 @@ CREATE TABLE IF NOT EXISTS STUDENT(
   PASSWORD VARCHAR(255) NOT NULL
 )`;
 
-// const updateStudentsTableQuery = `
-// -- Drop the foreign key constraint
-// ALTER TABLE STUDCLASS
-// DROP FOREIGN KEY studclass_ibfk_1;
-// `;
 
 const modifyRASTUDQuery = `
 -- Modify the RASTUD column in the STUDENT table
@@ -246,16 +241,6 @@ CREATE TABLE IF NOT EXISTS COLLABORATOR(
     // Execute the table creation query
     const [createStudentTableResults] = await connection.query(createStudentsTableQuery);
     console.log('Table created successfully:', createStudentTableResults);
-
-    // const [alterStudentTable] = await connection.query(updateStudentsTableQuery);
-    // console.log('Table altered successfully:', alterStudentTable);
-    // const [alterRASTUDQuery] = await connection.query(modifyRASTUDQuery);
-    // console.log('Table altered successfully:', alterRASTUDQuery);
-    // const [modifyPassword] = await connection.query(modifyPasswordQuery);
-    // console.log('Table altered successfully:', modifyPassword);
-    // const [recreateForeignKey] = await connection.query(recreateForeignKeyQuery);
-    // console.log('Table altered successfully:', recreateForeignKey);
-
 
 
     const [createClassTableResults] = await connection.query(createClassesTableQuery);

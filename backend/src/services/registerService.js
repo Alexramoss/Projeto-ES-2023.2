@@ -124,7 +124,7 @@ let createNewUser = async (data) => {
         let userItem = {
             fullname: data.fullname,
             email: data.email,
-            password: bcryptjs.hashSync(data.password, salt)
+            password: bcryptjs.hashSync(generateRandomNumber().toString(), salt)
         };
 
         let randomValue;
@@ -140,6 +140,7 @@ let createNewUser = async (data) => {
 
             if (data.isStudent === "true") {
                 userItem.RASTUD = data.isStudent === "true" ? randomValue.toString().padStart(5, '0') : null;
+
             }
 
             console.log("Generated random value:", randomValue);
