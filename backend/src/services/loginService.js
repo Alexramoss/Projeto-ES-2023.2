@@ -108,7 +108,7 @@ let findUserByEmail = (email) => {
     try {
       console.log('problema');
       const [rows] = await DBConnection.query(
-        'SELECT * FROM `users` WHERE `email` = ?',
+        'SELECT * FROM `student` WHERE `email` = ?',
         [email]
       );
 
@@ -141,7 +141,7 @@ let findUserById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const [rows] = await DBConnection.query(
-        "SELECT * FROM users WHERE id = ?",
+        "SELECT * FROM student WHERE id = ?",
         [id]
       );
 

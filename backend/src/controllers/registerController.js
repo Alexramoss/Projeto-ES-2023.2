@@ -70,6 +70,7 @@ let createNewUser = async (req, res) => {
 
     //create a new user
     let newUser = {
+        rastud: req.body.rastud,
         fullname: req.body.fullName,
         email: req.body.email,
         password: req.body.password

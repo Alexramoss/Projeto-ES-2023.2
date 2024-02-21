@@ -16,6 +16,8 @@ const passport = require("passport")
 
 let app = express();
 
+const classeRoutes = require("./routes/web");
+
 //Enable body parser post data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
