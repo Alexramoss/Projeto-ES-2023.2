@@ -8,7 +8,7 @@ const connectFlash = require("connect-flash")
 const session = require("express-session")
 const passport = require("passport")
 const secureRoute = require("./routes/secureRoutes")
-
+const emailRoutes = require("./routes/emailRoutes")
 
 // const connection = require("./configs/connectDB")
 
@@ -51,6 +51,8 @@ app.use(passport.session());
 
 // init all web routes
 initWebRoutes(app);
+
+app.use('/email', emailRoutes);
 
 //init secure web routes
 app.use("/user", passport.authenticate('jwt', { session: false }), secureRoute);

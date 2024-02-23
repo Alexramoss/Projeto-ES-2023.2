@@ -29,9 +29,6 @@ let initWebRoutes = (app) => {
         successFlash: true,
         failureFlash: true
     }));
-
-
-
     router.post(
     '/signin',
     async (req, res, next) => {
