@@ -40,14 +40,12 @@ let createNewUser = async (data) => {
             randomValue = generateRandomNumber();
 
             if (data.isStudent === "false") {
-                userItem.RACOLLAB = data.isStudent === "false" ? randomValue.toString().padStart(5, '0') : null;
+                userItem.RACOLLAB = randomValue.toString().padStart(5, '0');
                 userItem.role = data.role;
             }
-
+            
             if (data.isStudent === "true") {
-
-                userItem.RASTUD = data.isStudent === "true" ? randomValue.toString().padStart(5, '0') : null;
-
+                userItem.RASTUD = randomValue.toString().padStart(5, '0');
             }
 
             console.log("Generated random value:", randomValue);

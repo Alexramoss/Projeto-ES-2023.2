@@ -1,9 +1,7 @@
 const { validationResult } = require("express-validator");
-const registerService = require("../services/registerService")
-const editUserService = require("../services/editUserService")
-const nodemailerConfig = require("../configs/nodemailerConfig")
-
-
+const registerService = require("../services/registerService");
+const editUserService = require("../services/editUserService");
+const nodemailerConfig = require("../configs/nodemailerConfig");
 
 let getPageRegister = (req, res) => {
     return res.render("register.ejs", {
@@ -24,9 +22,7 @@ let createNewUser = async (req, res) => {
         return res.json({
             message: 'Signup error',
             errors: errorsArr
-            
-
-        })
+        });
     }
 
     //create a new user
@@ -41,33 +37,27 @@ let createNewUser = async (req, res) => {
     };
     try {
         let user = await registerService.createNewUser(newUser);
-        // return res.redirect("/login");
-        console.log("New user created:" + JSON.stringify(newUser))
+        console.log("New user created:" + JSON.stringify(newUser));
 
-        nodemailerConfig.sendEmail(user)
+        // Send email to the newly registered user
+        await nodemailerConfig.sendEmail(user.email, (newUser.isStudent === "true"));
 
         return res.json({
             message: 'Signup successful',
             fullname: newUser.fullname, 
             password: newUser.password
-            
-
-        })
+        });
     } catch (err) {
         req.flash("errors", err);
         return res.json({
             message: 'Signup failed',
-            errors: err, 
-            
-            
-
-        })
+            errors: err
+        });
     }
 };
 
-let editUserPassword = async (req, res) => { //the "register" a student does after he's already been registered by a collaborator
+let editUserPassword = async (req, res) => { 
     const { ID } = req.params;
-    // const { PASSWORD } = req.body;
 
     let validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -81,27 +71,19 @@ let editUserPassword = async (req, res) => { //the "register" a student does aft
         return res.json({
             message: 'Erro no registro da senha',
             errors: errorsArr
-            
-
-        })
+        });
     }
     let PASSWORD = req.body.password;
     let ISSTUDENT = req.body.isStudent;
 
-
     try {
-       await editUserService.updatePassword(ID, PASSWORD, ISSTUDENT)
-      res.json({ message: 'Password updated successfully' });
-
-    // } catch (err) {
-    //     req.flash("errors", err);
+       await editUserService.updatePassword(ID, PASSWORD, ISSTUDENT);
+       res.json({ message: 'Password updated successfully' });
     } catch (err) {
         res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
-    // }
-    
     }
-
 }
+
 module.exports = {
     getPageRegister: getPageRegister,
     createNewUser: createNewUser,

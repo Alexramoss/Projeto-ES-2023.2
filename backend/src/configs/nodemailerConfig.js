@@ -1,38 +1,43 @@
 const nodemailer = require('nodemailer');
+const DBConnection = require('../configs/connectDB');
 
-// Create a Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: '', //email aqui
-    pass: '' //senha aqui
-  }
-});
-
-// Function to send email
-const sendEmail = async (user) => {
+const sendEmail = async (email, isStudent) => {
   try {
-    // Email template with placeholders for user's name and ID
-    const emailTemplate = `
-      <p>Hello ${user.fullname},</p>
-      <p>Bem vindo à nossa plataforma! Seu código para login é: ${user.id}</p>
-      <p>Obrigada por se juntar a nós.</p>
-    `;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'josemeloss01@gmail.com',
+        pass: 'oktfqtnsvlfdlsnu',
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
 
-    // Email options
+    const query = isStudent ? 'SELECT RASTUD FROM STUDENT WHERE email = ?' : 'SELECT RACOLLAB FROM COLLABORATOR WHERE email = ?';
+    const [rows] = await DBConnection.query(query, [email]);
+
+    if (rows.length === 0) {
+      throw new Error('Usuário não encontrado.');
+    }
+
+    const identifier = rows[0][isStudent ? 'RASTUD' : 'RACOLLAB'];
+
     const mailOptions = {
-      from: 'mvitoriapereirac@gmail.com',
-      to: user.email,
-      subject: 'Welcome to Our Platform',
-      html: emailTemplate
+      from: 'seuemail@gmail.com',
+      to: email,
+      subject: 'Bem vindo ao App',
+      html: `<p>Seu identificador de login é: ${identifier}</p>`,
     };
 
-    // Send email
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
+    console.log('E-mail enviado:', info.response);
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Erro ao enviar e-mail:', error);
+    throw new Error('Erro interno ao enviar e-mail.');
   }
 };
 
-module.exports = { sendEmail };
+module.exports = {
+  sendEmail,
+};

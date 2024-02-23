@@ -29,6 +29,9 @@ let initWebRoutes = (app) => {
         successFlash: true,
         failureFlash: true
     }));
+
+
+
     router.post(
     '/signin',
     async (req, res, next) => {
@@ -68,14 +71,6 @@ let initWebRoutes = (app) => {
         )(req, res, next);
     }
     );
-
-    router.get("/register", getPageRegister);
-    router.post("/register", auth.validateRegister, createNewUser);
-    // router.post("/register", createNewUser);
-    router.put("/editpassword/:ID", auth.validatePasswordUpdate, editUserPassword); //when the student creates its own password
-    router.post("/logout", postLogOut)
-    return app.use("/", router);
-};
 // Rota para obter todas as classes com filtros
 router.get("/classes", classeController.getAllClasses);
 
@@ -108,40 +103,48 @@ router.put("/teachers/:rateach", teachersController.updateTeacher);
 router.delete("/teachers/:rateach", teachersController.deleteTeacher);
 
 
-// Rota para obter todas as notas com filtros
-router.get("/notes", noteController.getAllNotes);
+    // Rota para obter todas as notas com filtros
+    router.get("/notes", noteController.getAllNotes);
 
-// Rota para obter uma única nota por RASTUD
-router.get("/notes/:RASTUD", noteController.getNoteByRASTUD);
+    // Rota para obter uma única nota por RASTUD
+    router.get("/notes/:RASTUD", noteController.getNoteByRASTUD);
 
-// Rota para criar uma nova nota
-router.post("/notes", noteController.createNote);
+    // Rota para criar uma nova nota
+    router.post("/notes", noteController.createNote);
 
-// Rota para atualizar uma nota por RASTUD
-router.put("/notes/:RASTUD", noteController.updateNote);
+    // Rota para atualizar uma nota por RASTUD
+    router.put("/notes/:RASTUD", noteController.updateNote);
 
-// Rota para excluir uma nota por RASTUD
-router.delete("/notes/:RASTUD", noteController.deleteNote);
+    // Rota para excluir uma nota por RASTUD
+    router.delete("/notes/:RASTUD", noteController.deleteNote);
 
-router.get("/events", eventsController.getAllEvents);
+    router.get("/events", eventsController.getAllEvents);
 
-router.get("/events/:rateach", eventsController.getEventByRaTeacher);
+    router.get("/events/:rateach", eventsController.getEventByRaTeacher);
 
-router.post("/events", eventsController.createEvent);
+    router.post("/events", eventsController.createEvent);
 
-router.put("/events/:id", eventsController.updateEvent);
+    router.put("/events/:id", eventsController.updateEvent);
 
-router.delete("/events/:id", eventsController.deleteEvent);
+    router.delete("/events/:id", eventsController.deleteEvent);
 
-router.get("/matters", mattersController.getAllMatters);
+    router.get("/matters", mattersController.getAllMatters);
 
-router.get("/matters/:idclass", mattersController.getMatterByRaTeacher);
+    router.get("/matters/:idclass", mattersController.getMatterByRaTeacher);
 
-router.post("/matters", mattersController.createMatter);
+    router.post("/matters", mattersController.createMatter);
 
-router.put("/matters/:idclass", mattersController.updateMatter);
+    router.put("/matters/:idclass", mattersController.updateMatter);
 
-router.delete("/matters/:idclass", mattersController.deleteMatter);
+    router.delete("/matters/:idclass", mattersController.deleteMatter);
+    router.get("/register", getPageRegister);
+    router.post("/register", auth.validateRegister, createNewUser);
+    // router.post("/register", createNewUser);
+    router.put("/editpassword/:ID", auth.validatePasswordUpdate, editUserPassword); //when the student creates its own password
+    router.post("/logout", postLogOut)
+    return app.use("/", router);
+};
+
 
 
 module.exports = router;
