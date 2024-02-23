@@ -11,18 +11,19 @@ let createNewUser = async (data) => {
     try {
         console.log("Creating a new user...");
         
-        // Check if student is in included in a class 
+        // Check if class provided exists
         
         if (data.isStudent === "true") {
-            let studentIsInClass = await classeService.getClassById(data.classId)
+            let studentIsInClass = await classeService.getClassById(data.idClass)
+            console.log("data.idClass " + JSON.stringify(data.idClass))
 
             if (!studentIsInClass) {
-                throw new Error(`This email "${data.email}" is already registered. Please choose another email.`);
+                throw new Error(`This class "${data.idClass}" is not registered. Please choose another class.`);
             }
         }
         
 
-        console.log("Email is unique. Proceeding with user creation...");
+        console.log("Class ID exists. Proceeding with user creation...");
 
         let salt = bcryptjs.genSaltSync(10);
 
