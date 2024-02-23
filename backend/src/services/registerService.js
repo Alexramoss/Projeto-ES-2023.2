@@ -1,6 +1,7 @@
-// const DBConnection = require("../configs/connectDB")
-// const bcryptjs = require("bcryptjs");
-// const { use } = require("passport");
+
+const DBConnection = require("../configs/connectDB");
+const bcryptjs = require("bcryptjs");
+const classeService = require("../services/classeService")
 
 function generateRandomNumber() {
     return Math.floor(10000 + Math.random() * 90000);
@@ -10,14 +11,19 @@ let createNewUser = async (data) => {
     try {
         console.log("Creating a new user...");
         
-        // Check if email already exists
-        // let emailExists = await checkExistEmail(data.email, data.isStudent);
+        // Check if class provided exists
+        
+        if (data.isStudent === "true") {
+            let studentIsInClass = await classeService.getClassById(data.idClass)
+            console.log("data.idClass " + JSON.stringify(data.idClass))
 
-        // if (emailExists) {
-        //     throw new Error(`This email "${data.email}" is already registered. Please choose another email.`);
-        // }
+            if (!studentIsInClass) {
+                throw new Error(`This class "${data.idClass}" is not registered. Please choose another class.`);
+            }
+        }
+        
 
-        // console.log("Email is unique. Proceeding with user creation...");
+        console.log("Class ID exists. Proceeding with user creation...");
 
         let salt = bcryptjs.genSaltSync(10);
 
@@ -39,6 +45,7 @@ let createNewUser = async (data) => {
             }
 
             if (data.isStudent === "true") {
+
                 userItem.RASTUD = data.isStudent === "true" ? randomValue.toString().padStart(5, '0') : null;
 
             }

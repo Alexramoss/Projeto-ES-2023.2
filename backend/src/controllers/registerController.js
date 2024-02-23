@@ -36,6 +36,7 @@ let createNewUser = async (req, res) => {
         email: req.body.email,
         password: req.body.password,
         isStudent: req.body.isStudent,
+        idClass: req.body.idClass,
         role: req.body.role
     };
     try {
@@ -67,6 +68,23 @@ let createNewUser = async (req, res) => {
 let editUserPassword = async (req, res) => { //the "register" a student does after he's already been registered by a collaborator
     const { ID } = req.params;
     // const { PASSWORD } = req.body;
+
+    let validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+        let errorsArr = [];
+
+        let errors = Object.values(validationErrors.mapped());
+        errors.forEach((item) => {
+            errorsArr.push(item.msg);
+        });
+        req.flash("errors", errorsArr);
+        return res.json({
+            message: 'Erro no registro da senha',
+            errors: errorsArr
+            
+
+        })
+    }
     let PASSWORD = req.body.password;
     let ISSTUDENT = req.body.isStudent;
 
