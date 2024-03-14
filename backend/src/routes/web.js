@@ -56,8 +56,9 @@ let initWebRoutes = (app) => {
                 if (error) return next(error);
                 console.log("signin route "+ JSON.stringify(user))
 
-                const body = { _id: (user.RASTUD || user.RACOLLAB), email: user.EMAIL, role: req.body.role };
+                const body = { id: (user.RASTUD || user.RACOLLAB), email: user.EMAIL, role: req.body.role, name:user.FULLNAME, idclass: user.IDCLASS };
                 console.log(JSON.stringify(body))
+                console.log(req.user.role)
                 const token = jwt.sign({ user: body }, 'TOP_SECRET'); 
                 //You should not store sensitive information such as the user’s password in the token.
 
@@ -137,8 +138,11 @@ router.delete("/teachers/:rateach", teachersController.deleteTeacher);
     router.put("/matters/:idclass", mattersController.updateMatter);
 
     router.delete("/matters/:idclass", mattersController.deleteMatter);
-    router.get("/register", getPageRegister);
+
+    // router.get("/register", getPageRegister);
+
     router.post("/register", auth.validateRegister, createNewUser);
+
     // router.post("/register", createNewUser);
     router.put("/editpassword/:ID", auth.validatePasswordUpdate, editUserPassword); //when the student creates its own password
     router.post("/logout", postLogOut)

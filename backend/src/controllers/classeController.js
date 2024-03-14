@@ -1,6 +1,7 @@
 const classeService = require("../services/classeService");
 
 let getAllClasses = async (req, res) => {
+  console.log("chamou classes")
   try {
     const { classname, letter, modality, minId, maxId } = req.query;
     const classes = await classeService.getAllClasses(

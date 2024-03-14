@@ -24,7 +24,8 @@ let getNoteByRASTUD = async (RASTUD) => {
       [RASTUD]
     );
     if (results.length > 0) {
-      return results[0];
+      // return results[0];
+      return results;
     } else {
       return null;
     }

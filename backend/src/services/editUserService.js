@@ -49,6 +49,9 @@ let updatePassword = (id, password, isStudent) => {
             reject({ status: 500, message: 'Internal server error' });
         }
     });
+
+    
+
 };
 
 module.exports = {

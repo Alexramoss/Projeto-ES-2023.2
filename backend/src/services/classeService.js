@@ -1,5 +1,53 @@
 const DBConnection = require("../configs/connectDB");
 
+// let getAllClasses = async (
+//   classname,
+//   letter,
+//   modality,
+//   minId,
+//   maxId
+// ) => {
+//   try {
+//     let filterQuery = "SELECT * FROM CLASS WHERE 1=1";
+//     const queryParams = [];
+
+//     if (classname) {
+//       filterQuery += " AND CLASSNAME = ?";
+//       queryParams.push(classname);
+//     }
+
+//     if (letter) {
+//       filterQuery += " AND LETTER = ?";
+//       queryParams.push(letter);
+//     }
+
+//     if (modality) {
+//       filterQuery += " AND MODALITY = ?";
+//       queryParams.push(modality);
+//     }
+
+//     if (minId) {
+//       filterQuery += " AND IDCLASS >= ?";
+//       queryParams.push(minId);
+//     }
+
+//     if (maxId) {
+//       filterQuery += " AND IDCLASS <= ?";
+//       queryParams.push(maxId);
+//     }
+
+//     // If no parameters are provided, execute a basic SELECT * FROM CLASS query
+//     if (queryParams.length === 0) {
+//       console.log("no params provided")
+//       filterQuery = "SELECT * FROM CLASS";
+//     }
+
+//     const [results] = await DBConnection.query(filterQuery, queryParams);
+//     return results;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 let getAllClasses = async (
   classname,
   letter,
@@ -11,29 +59,34 @@ let getAllClasses = async (
     let filterQuery = "SELECT * FROM CLASS WHERE 1=1";
     const queryParams = [];
 
-    if (classname) {
+    if (classname && classname !== "null") {
       filterQuery += " AND CLASSNAME = ?";
       queryParams.push(classname);
     }
 
-    if (letter) {
+    if (letter && letter !== "null") {
       filterQuery += " AND LETTER = ?";
       queryParams.push(letter);
     }
 
-    if (modality) {
+    if (modality && modality !== "null") {
       filterQuery += " AND MODALITY = ?";
       queryParams.push(modality);
     }
 
-    if (minId) {
+    if (minId && minId !== "null") {
       filterQuery += " AND IDCLASS >= ?";
       queryParams.push(minId);
     }
 
-    if (maxId) {
+    if (maxId && maxId !== "null") {
       filterQuery += " AND IDCLASS <= ?";
       queryParams.push(maxId);
+    }
+
+    // If no parameters are provided or all parameters are "null", execute a basic SELECT * FROM CLASS query
+    if (queryParams.length === 0 || queryParams.every(param => param === null)) {
+      filterQuery = "SELECT * FROM CLASS";
     }
 
     const [results] = await DBConnection.query(filterQuery, queryParams);
@@ -42,6 +95,7 @@ let getAllClasses = async (
     throw error;
   }
 };
+
 
 let getClassById = async (id) => {
   try {
