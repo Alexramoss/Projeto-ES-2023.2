@@ -18,12 +18,14 @@ class _KanbanBoardState extends State<KanbanBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF20B4A6),
+
       appBar: AppBar(
-        backgroundColor: Color(0xffffffff),
+        // backgroundColor: Color(0xffffffff),
         elevation: 0,
         title: Row(
           children: <Widget>[
-            Icon(Icons.view_column, color: Color(0xff2F334B),),
+            Icon(Icons.view_column, color: Color(0xff000000),),
             SizedBox(width: 20,),
             Text(
               'Tarefas', 
@@ -174,7 +176,7 @@ class BoardViewExample extends StatelessWidget {
         _listData.insert(listIndex!, list);
       },
       headerBackgroundColor: Colors.transparent,
-      backgroundColor: Color(0xffECEDFC),
+      backgroundColor: Color(0x90FFFFFF),
       header: [
         Expanded(
           child: Container(
@@ -184,7 +186,7 @@ class BoardViewExample extends StatelessWidget {
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: Color(0xff2F334B)
+                color: Color(0xff000000)
               ),
             )
           )
