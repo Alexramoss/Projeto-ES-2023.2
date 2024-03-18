@@ -6,8 +6,8 @@ const sendEmail = async (email, isStudent) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'josemeloss01@gmail.com',
-        pass: 'oktfqtnsvlfdlsnu',
+        user: 'alexramos1942@gmail.com',
+        pass: 'atuw jjiq qvgs vaqh',
       },
       tls: {
         rejectUnauthorized: false,
