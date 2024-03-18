@@ -54,18 +54,27 @@ class UserAPIService {
 
 
   Future<void> register({
-    required String fullname,
-    required String email,
-    required String password,
-    required bool isStudent,
-    required String idClass,
-    required String role,
-  }) async {
+  required String fullname,
+  required String email,
+  required bool isStudent,
+  String? idClass,
+  required String role,
+}) async {
+  try {
+    // Retrieve the token from shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    // Check if the token is null or empty
+    if (token == null || token.isEmpty) {
+      print('Token is null or empty');
+      return;
+    }
+
     // Define the request body
     Map<String, dynamic> requestBody = {
-      'fullname': fullname,
+      'fullName': fullname,
       'email': email,
-      'password': password,
       'isStudent': isStudent.toString(),
       'idClass': idClass,
       'role': role,
@@ -74,8 +83,8 @@ class UserAPIService {
     // Encode the request body
     String encodedBody = jsonEncode(requestBody);
 
-    // Define the endpoint URL
-    String url = '$baseUrl/user/register';
+    // Define the endpoint URL with the token as a query parameter
+    String url = '$baseUrl/user/register?secret_token=$token';
 
     // Make the POST request
     http.Response response = await http.post(
@@ -98,16 +107,27 @@ class UserAPIService {
       print('Register Request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
     }
+  } catch (error) {
+    print('Error: $error');
+    throw error;
   }
+}
 
-  Future<void> editPassword({
+  Future<String> editPassword({
     required String id,
     required String password,
-    required bool isStudent,
+    required String confirmationPassword,
+    required String isStudent,
   }) async {
+    print("edit service called");
+    print(password);
+    print(confirmationPassword);
+    print(isStudent);
+
     // Define the request body
     Map<String, dynamic> requestBody = {
       'password': password,
+      'confirmationPassword': confirmationPassword,
       'isStudent': isStudent.toString(),
     };
 
@@ -132,11 +152,11 @@ class UserAPIService {
       Map<String, dynamic> responseBody = jsonDecode(response.body);
 
       // Print or handle the response as needed
-      print('Edit Password Response: $responseBody');
+      return('Edit Password Response: $responseBody');
     } else {
       // Request failed
       print('Edit Password Request failed with status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      return('O registro de senha falhou: ${response.body}');
     }
   }
 
@@ -165,6 +185,9 @@ class UserAPIService {
         email: data['user']['email'],
         role: data['user']['role'],
         name: data['user']['name'],
+        idClass: data['user']['idclass'],
+        occupation: data['user']['occupation']
+        // idclass: data['user']['idclass'],
       );
     } else {
       // Request failed

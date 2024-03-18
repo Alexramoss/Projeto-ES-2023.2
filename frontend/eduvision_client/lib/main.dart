@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
+        '/register': (context) => RegisterPasswordScreen(),
         '/dashboard': (context) => DashboardScreen(fullName: '', studentClass: ''), // Add route for DashboardScreen
 
       },

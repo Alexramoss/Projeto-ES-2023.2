@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     _passwordController.text = "";
                     Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen(fullName: userProfile!.name , studentClass: "6 ano",)),
+                  MaterialPageRoute(builder: (context) => DashboardScreen(fullName: userProfile.name , studentClass: userProfile.idClass)),
                 );
                   } 
                    else if (prefs.getString("isStudent") == "collaborator" && prefs.getString("token") != '')  {
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     _passwordController.text = "";
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen(fullName: userProfile!.name , occupation: userProfile.role)),
+                  MaterialPageRoute(builder: (context) => DashboardScreen(fullName: userProfile!.name , occupation: userProfile.occupation)),
                 );
                 } else {
                   // Token does not exist, handle accordingly
