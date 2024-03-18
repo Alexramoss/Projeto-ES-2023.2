@@ -1,4 +1,6 @@
 
+// import 'dart:js';
+
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
@@ -34,19 +36,25 @@ class _KanbanBoardState extends State<KanbanBoard> {
         ), 
         bottom: PreferredSize(child: Container(color: Colors.grey[300], height: 1.0,), preferredSize: Size.fromHeight(1.0)),
       ),
-      body: BoardViewExample(),
+      body: BoardViewExample(context: context),
     );
   }
 }
 
 class BoardViewExample extends StatelessWidget {
 
+  BuildContext context;
+
+  BoardViewExample({required this.context});
+  
+
   final List<BoardListObject> _listData = [
     BoardListObject(
       title: "A fazer...", 
-      items: [
-        BoardItemObject(title: '27 Pares de Zapatos Modelo SDF-234d', from: 'Ruben'),
-        BoardItemObject(title: '7 Pares de Bota Modelo SDF-234d', from: 'Martha')]
+      items: ActivitiesList().items
+      // items: [
+      //   BoardItemObject(title: '27 Pares de Zapatos Modelo SDF-234d', from: 'Ruben'),
+      //   BoardItemObject(title: '7 Pares de Bota Modelo SDF-234d', from: 'Martha')]
     ),
     BoardListObject(title: "Fazendo...", items: []),
     BoardListObject(title: "Feito!", items: []),
@@ -77,9 +85,39 @@ class BoardViewExample extends StatelessWidget {
         onStartDragItem: (int? listIndex, int? itemIndex, BoardItemState state) {
 
         },
+        onTapItem: (int? listIndex, int? itemIndex, BoardItemState state) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(itemObject.title!),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10),
+                      Text(itemObject.description!),
+                      Divider(),
+                      SizedBox(height: 10),
+                      Text(
+                        itemObject.explanationTitle!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(itemObject.explanationDescription!),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+
+
         onDropItem: (int? listIndex, int? itemIndex, int? oldListIndex,
           int? oldItemIndex, BoardItemState state) {
-          
+
           //Used to update our local item data
           var item = _listData[oldListIndex!].items[oldItemIndex!];
 
@@ -87,8 +125,7 @@ class BoardViewExample extends StatelessWidget {
           
           _listData[listIndex!].items.insert(itemIndex!, item);
         },
-        onTapItem: (int? listIndex, int? itemIndex, BoardItemState state) async {
-        },
+
         item: Container(
           margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
           child: Card(
@@ -98,14 +135,14 @@ class BoardViewExample extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(itemObject.from, style: TextStyle(
+                  Text(itemObject.title!, style: TextStyle(
                     height: 1.5,
                     color: Color(0xff2F334B),
                     fontSize: 16,
                     fontWeight: FontWeight.bold
                   ),),
                   SizedBox(height: 10.0,),
-                  Text(itemObject.title, style: TextStyle(
+                  Text(itemObject.explanationTitle!, style: TextStyle(
                     height: 1.5,
                     color: Color(0xff2F334B),
                     fontSize: 16
