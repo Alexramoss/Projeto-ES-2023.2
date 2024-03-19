@@ -64,33 +64,6 @@ CREATE TABLE IF NOT EXISTS TEACHER(
   PASSWORD VARCHAR(255) NOT NULL
 )`;
 
-const createNotesTableQuery = `
-CREATE TABLE IF NOT EXISTS NOTE(
-  RASTUD VARCHAR(255),
-  LINGUA_PORTUGUESA VARCHAR(100),
-  ARTES VARCHAR(100),
-  EDUCACAO_FISICA VARCHAR(100),
-  MATEMATICA VARCHAR(100),
-  BIOLOGIA VARCHAR(100),
-  FISICA VARCHAR(100),
-  QUIMICA VARCHAR(100),
-  HISTORIA VARCHAR(100),
-  GEOGRAFIA VARCHAR(100),
-  FILOSOFIA VARCHAR(100),
-  SOCIOLOGIA VARCHAR(100),
-  ELETIVA VARCHAR(100),
-  RESULTADO VARCHAR(100),
-  FOREIGN KEY(RASTUD) REFERENCES STUDENT(RASTUD) ON DELETE CASCADE
-)`;
-
-const createEventsTableQuery = `
-CREATE TABLE IF NOT EXISTS EVENT(
-  DESCRIPTION VARCHAR(255),
-  DATA VARCHAR(255),
-  RA_TEACH VARCHAR(255),
-  FOREIGN KEY(RA_TEACH) REFERENCES TEACHER(RATEACH)
-)`;
-
 const createMattersTableQuery = `
 CREATE TABLE IF NOT EXISTS MATTER(
   MATTER VARCHAR(255),
@@ -109,7 +82,7 @@ CREATE TABLE IF NOT EXISTS MATTER(
     console.log('Connected to MySQL!!! ******');
 
     // Check if the database exists
-    const databaseName = 'demotutorial';
+    const databaseName = 'chef_db';
     const [results] = await connection.query(`SHOW DATABASES LIKE '${databaseName}'`);
 
     if (results.length === 0) {
@@ -136,10 +109,6 @@ CREATE TABLE IF NOT EXISTS MATTER(
     console.log('Table created successfully:', createCollaboratorTableResults);
     const [createTeacherTableResults] = await connection.query(createTeachersTableQuery);
     console.log('Table created successfully:', createTeacherTableResults);
-    const [createNoteTableResults] = await connection.query(createNotesTableQuery);
-    console.log('Table created successfully:', createNoteTableResults);
-    const [createEventTableResults] = await connection.query(createEventsTableQuery);
-    console.log('Table created successfully:', createEventTableResults);
     const [createMatterTableResults] = await connection.query(createMattersTableQuery);
     console.log('Table created successfully:', createMatterTableResults);
 

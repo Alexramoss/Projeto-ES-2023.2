@@ -9,8 +9,6 @@ const jwt = require('jsonwebtoken')
 let router = express.Router();
 const classeController = require("../controllers/classeController");
 const teachersController = require("../controllers/teachersController")
-const noteController = require("../controllers/notesController");
-const eventsController = require("../controllers/eventsController");
 const mattersController = require("../controllers/mattersController");
 
 initPassportLocal()
@@ -102,32 +100,6 @@ router.put("/teachers/:rateach", teachersController.updateTeacher);
 
 // Rota para excluir uma teacher por RATEACH
 router.delete("/teachers/:rateach", teachersController.deleteTeacher);
-
-
-// Rota para obter todas as notas com filtros
- router.get("/notes", noteController.getAllNotes);
-
- // Rota para obter uma única nota por RASTUD
-router.get("/notes/:RASTUD", noteController.getNoteByRASTUD);
-
-// Rota para criar uma nova nota
-router.post("/notes", noteController.createNote);
-
-// Rota para atualizar uma nota por RASTUD
-router.put("/notes/:RASTUD", noteController.updateNote);
-
-// Rota para excluir uma nota por RASTUD
-router.delete("/notes/:RASTUD", noteController.deleteNote);
-
-router.get("/events", eventsController.getAllEvents);
-
-router.get("/events/:rateach", eventsController.getEventByRaTeacher);
-
- router.post("/events", eventsController.createEvent);
-
-router.put("/events/:id", eventsController.updateEvent);
-
-router.delete("/events/:id", eventsController.deleteEvent);
 
 router.get("/matters", mattersController.getAllMatters);
 
