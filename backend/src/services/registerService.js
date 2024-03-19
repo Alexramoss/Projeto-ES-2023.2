@@ -28,6 +28,7 @@ let createNewUser = async (data) => {
         let salt = bcryptjs.genSaltSync(10);
 
         let userItem = {
+            id_class: data.idClass,
             fullname: data.fullname,
             email: data.email,
             password: bcryptjs.hashSync(generateRandomNumber().toString(), salt)

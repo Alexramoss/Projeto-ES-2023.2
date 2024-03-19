@@ -84,12 +84,29 @@ let deleteClass = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-};
+ 
+}
 
+let getAllStudentsOfClass = async (req, res) => {
+  const { ID_CLASS } = req.params;
+  try {
+    console.log(ID_CLASS + "class id controller")
+    const students = await classeService.getStudentsFromClass(ID_CLASS);
+    if (students) {
+      res.json({ students });
+    } else {
+      res.status(404).json({ message: students });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 module.exports = {
   getAllClasses: getAllClasses,
   getClassById: getClassById,
   createClass: createClass,
   updateClass: updateClass,
   deleteClass: deleteClass,
+  getAllStudentsOfClass: getAllStudentsOfClass,
 };

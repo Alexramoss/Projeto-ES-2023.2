@@ -157,10 +157,31 @@ let deleteClass = async (id) => {
   }
 };
 
+let getStudentsFromClass = async (id) => {
+  try {
+    console.log("a!")
+    console.log(JSON.stringify(id))
+
+    const [results] = await DBConnection.query(
+      "SELECT * FROM STUDENT WHERE ID_CLASS = ?",
+      [id]
+    );
+    console.log(results)
+    if (results && results != []) {
+      return results;
+    } else {
+      return "No students found";
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAllClasses: getAllClasses,
   getClassById: getClassById,
   createClass: createClass,
   updateClass: updateClass,
   deleteClass: deleteClass,
+  getStudentsFromClass: getStudentsFromClass
 };
