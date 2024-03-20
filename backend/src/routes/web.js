@@ -9,7 +9,10 @@ const jwt = require('jsonwebtoken')
 let router = express.Router();
 const classeController = require("../controllers/classeController");
 const teachersController = require("../controllers/teachersController")
-const mattersController = require("../controllers/mattersController");
+// const noteController = require("../controllers/notesController");
+// const eventsController = require("../controllers/eventsController");
+// const mattersController = require("../controllers/mattersController");
+const taskController = require("../controllers/taskController");
 
 initPassportLocal()
 
@@ -101,17 +104,9 @@ router.put("/teachers/:rateach", teachersController.updateTeacher);
 // Rota para excluir uma teacher por RATEACH
 router.delete("/teachers/:rateach", teachersController.deleteTeacher);
 
-router.get("/matters", mattersController.getAllMatters);
 
-router.get("/matters/:idclass", mattersController.getMatterByRaTeacher);
 
-router.post("/matters", mattersController.createMatter);
 
-router.put("/matters/:idclass", mattersController.updateMatter);
-
-router.delete("/matters/:idclass", mattersController.deleteMatter);
-
-    // router.get("/register", getPageRegister);
 
  router.post("/register", auth.validateRegister, createNewUser);
 
@@ -120,6 +115,17 @@ router.put("/editpassword/:ID", auth.validatePasswordUpdate, editUserPassword); 
 router.post("/logout", postLogOut)
 
 router.get("/students/:ID_CLASS", classeController.getAllStudentsOfClass);
+
+router.post("/task", taskController.addTask);
+
+router.put("/edittask/:ID", taskController.editTask);
+
+router.get("/task/:ID_CLASS", taskController.getTasksByClass);
+router.get("/task", taskController.getTasksByStatus);
+
+
+router.delete("/task/:ID", taskController.deleteTask);
+
 
     return app.use("/", router);
 };

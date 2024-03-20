@@ -47,6 +47,18 @@ CREATE TABLE IF NOT EXISTS STUDENT(
   FOREIGN KEY (ID_CLASS) REFERENCES CLASS(IDCLASS)
 )`;
 
+const createTasksTableQuery = `
+CREATE TABLE IF NOT EXISTS TASK(
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  ID_CLASS INT,
+  TITLE VARCHAR(255) NOT NULL,
+  DESCRIPTION VARCHAR(255) NOT NULL,
+  EXPLANATION_TITLE VARCHAR(255) NOT NULL,
+  EXPLANATION_DESCRIPTION VARCHAR(255) NOT NULL,
+  STATUS VARCHAR(255) NOT NULL,
+  FOREIGN KEY (ID_CLASS) REFERENCES CLASS(IDCLASS)
+)`;
+
 const createCollaboratorsTableQuery = `
 CREATE TABLE IF NOT EXISTS COLLABORATOR(
   RACOLLAB VARCHAR(255) PRIMARY KEY UNIQUE,
@@ -82,7 +94,7 @@ CREATE TABLE IF NOT EXISTS MATTER(
     console.log('Connected to MySQL!!! ******');
 
     // Check if the database exists
-    const databaseName = 'chef_db';
+    const databaseName = process.env.DB_NAME;
     const [results] = await connection.query(`SHOW DATABASES LIKE '${databaseName}'`);
 
     if (results.length === 0) {
@@ -111,6 +123,8 @@ CREATE TABLE IF NOT EXISTS MATTER(
     console.log('Table created successfully:', createTeacherTableResults);
     const [createMatterTableResults] = await connection.query(createMattersTableQuery);
     console.log('Table created successfully:', createMatterTableResults);
+    const [createTasksTableQueryResults] = await connection.query(createTasksTableQuery);
+    console.log('Table created successfully:', createTasksTableQueryResults);
 
   } catch (err) {
     console.error('Error:', err);
