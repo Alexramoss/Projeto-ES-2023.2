@@ -4,7 +4,7 @@
   <img src="https://github.com/Alexramoss/Projeto-ES-2023.2/assets/93000795/d5406222-3948-4e09-b4fe-521dd665cfd9" alt="Logo CIn"     height=200px width=200px> <img src="https://github.com/Alexramoss/Projeto-ES-2023.2/assets/93000795/165974cb-1fe2-45b2-ba05-13d7c526f1cf" alt="Logo UFPE" height=200px width=300px>
 </h1>
 
-## Este repositório contém o projeto sobre x proposto na cadeira de Engenharia de Software(IF977) da Universidade Federal de Pernambuco.
+## Este repositório contém o projeto sobre o app Chefinho proposto na cadeira de Engenharia de Software(IF977) da Universidade Federal de Pernambuco.
 
 ### Docente: 
 <p align="left" vertical-align= "middle">Vínicius Cardoso Garcia</p>
@@ -19,10 +19,10 @@
 
 ## Sobre o Projeto:
 
-A fim de incentivar o desenvolvimento da autonomia de crianças em idade escolar, nosso aplicativo fornecerá uma tabela interativa contando com cards que designam tarefas voltadas para a manutenção da limpeza, bem estar e segurança em sala de aula. 
+O Chefinho é um app que tem como objetivo promover o desenvolvimento da autonomia de crianças em idade escolar. Para isso, fornece um serviço capaz de integrar alunos e corpo docente na manutenção do ambiente escolar, promoção do bem estar da comunidade e  na participação ativa no estudante na construção das ações escolares.
 
-## Links Importantes:
-<a href="https://docs.google.com/document/d/1mTMhLnPbvr6UddJm-UBkjMJnM83Bjlby5gcwEHgpnyY/edit?usp=sharing">Relatório do Projeto</a>
+## Links de Acompanhamento:
+<a href="https://docs.google.com/document/d/1mTMhLnPbvr6UddJm-UBkjMJnM83Bjlby5gcwEHgpnyY/edit?usp=sharing">Planejamento do Projeto</a>
 <a href="https://whimsical.com/eng-soft-QhAy2QNSSNDSG2RkFStoyH">CBL do Projeto</a>
 <a href="https://trello.com/b/Dv6rCRez/proj-eng-soft">Kanban do Projeto</a>
 
