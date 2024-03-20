@@ -10,7 +10,7 @@
 <p align="left" vertical-align= "middle">Vínicius Cardoso Garcia</p>
 
 ### Semestre: 
-<p align="left" vertical-align= "middle">2023.1</p>
+<p align="left" vertical-align= "middle">2023.2</p>
 
 ### Integrantes da Equipe:
 <p align="left" vertical-align= "middle">Alex Ramos da Silva 🌟 | alexramos1942@gmail.com & ars6@cin.ufpe.br</p>
