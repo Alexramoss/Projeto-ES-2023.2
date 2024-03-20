@@ -62,6 +62,7 @@ let addTask = async (req, res) => {
         explanationDescription: req.body.explanationDescription,
         status: req.body.status,
     }
+    console.log(newTask)
 
     try {
         results = await taskService.addTask(newTask);

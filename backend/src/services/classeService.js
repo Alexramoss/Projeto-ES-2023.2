@@ -159,7 +159,6 @@ let deleteClass = async (id) => {
 
 let getStudentsFromClass = async (id) => {
   try {
-    console.log("a!")
     console.log(JSON.stringify(id))
 
     const [results] = await DBConnection.query(

@@ -1,6 +1,4 @@
 
-// import 'dart:js';
-
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
@@ -53,11 +51,7 @@ class BoardViewExample extends StatelessWidget {
   final List<BoardListObject> _listData = [
     BoardListObject(
       title: "A fazer...", 
-      items: ActivitiesList().items
-      // items: [
-      //   BoardItemObject(title: '27 Pares de Zapatos Modelo SDF-234d', from: 'Ruben'),
-      //   BoardItemObject(title: '7 Pares de Bota Modelo SDF-234d', from: 'Martha')]
-    ),
+      items: ActivitiesList().items),
     BoardListObject(title: "Fazendo...", items: []),
     BoardListObject(title: "Feito!", items: []),
     BoardListObject(title: "Tô com dificuldade!", items: []),
@@ -119,6 +113,7 @@ class BoardViewExample extends StatelessWidget {
 
         onDropItem: (int? listIndex, int? itemIndex, int? oldListIndex,
           int? oldItemIndex, BoardItemState state) {
+
 
           //Used to update our local item data
           var item = _listData[oldListIndex!].items[oldItemIndex!];

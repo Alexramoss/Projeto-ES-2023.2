@@ -6,6 +6,8 @@ class BoardListObject {
 }
 
 class BoardItemObject {
+    String? id;
+
   String? idClass;
   String? title;
   String? description;
@@ -13,8 +15,30 @@ class BoardItemObject {
   String? explanationDescription;
   String? status;
 
-  BoardItemObject({ this.idClass, this. status, this.title,  this.description,  this.explanationTitle,  this.explanationDescription});
+  BoardItemObject({ this.idClass, this. status, this.title,  this.description,  this.explanationTitle,  this.explanationDescription, this.id});
+factory BoardItemObject.fromJson(Map<String, dynamic> json) {
+  return BoardItemObject(
+    id: json['ID']?.toString() ?? '',
+    idClass: json['ID_CLASS']?.toString() ?? '',
+    title: json['TITLE']?.toString() ?? '', 
+    description: json['DESCRIPTION']?.toString() ?? '', 
+    explanationTitle: json['EXPLANATION_TITLE']?.toString() ?? '',
+    explanationDescription: json['EXPLANATION_DESCRIPTION'].toString(),
+    status: json['status'].toString()
+      );
+}
 
+Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'idClass': idClass,
+      'title': title,
+      'description': description,
+      'explanationTitle': explanationTitle,
+      'explanationDescription': explanationDescription,
+      'status': status,
+    };
+  }
 }
 
 class ActivitiesList {
