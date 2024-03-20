@@ -9,7 +9,7 @@ Subtarefas:
 * Integrar opção de recuperação de senha
 
 # Validar autenticação do usuário
-###Descrição: 
+## Descrição: 
 Como um usuário, eu quero garantir que minhas credenciais estão corretas, para poder acessar o aplicativo com segurança.
 Critério de aceite: - Ao inserir credenciais corretas, o usuário deve ser autenticado com sucesso - Ao inserir credenciais incorretas, o usuário deve receber uma mensagem de erro
 Subtarefas:
