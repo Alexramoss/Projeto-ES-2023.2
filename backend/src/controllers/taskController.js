@@ -31,7 +31,6 @@ const taskService = require("../services/taskService");
 let getTasksByClass = async (req, res) => {
     const { ID_CLASS } = req.params;
 
-    console.log(ID_CLASS + 'idclass')
 
     try {
         const results = await taskService.getTasksBy('ID_CLASS', ID_CLASS);
@@ -43,7 +42,7 @@ let getTasksByClass = async (req, res) => {
 };
 
 let getTasksByStatus = async (req, res) => {
-    const { status } = req.body;
+    const { status } = req.query;
 
     try {
         const results = await taskService.getTasksBy('STATUS', status);

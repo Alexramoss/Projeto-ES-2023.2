@@ -4,6 +4,7 @@ import 'package:eduvision_client/screens/create_student_screen.dart';
 import 'package:eduvision_client/screens/create_system_manager.dart';
 import 'package:eduvision_client/screens/grades_screen.dart';
 import 'package:eduvision_client/screens/kanban_screen.dart';
+import 'package:eduvision_client/screens/tarefas.dart';
 import "package:flutter/material.dart";
 
 class NavigatorService {
@@ -45,6 +46,12 @@ class NavigatorService {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AddManagerScreen()),
+        );
+        break;
+        case 'Tarefas da turma':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => handleTasksScreen()),
         );
         break;
       // Add more navigation options as needed
