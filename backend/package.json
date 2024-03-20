@@ -4,7 +4,7 @@
   "description": "a quick start for node.js project",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "start": "nodemon --exec babel-node src/server.js"
   },
   "repository": {
@@ -37,7 +37,9 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "simple-update-notifier": "^2.0.0"
+    "simple-update-notifier": "^2.0.0",
+    "supertest": "^6.3.4",
+    "vitest": "^1.4.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
