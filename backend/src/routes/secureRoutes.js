@@ -4,6 +4,7 @@ const  { authCollaborator } = require("../validation/authCollaborator")
 const auth = require("../validation/authValidation")
 const { getPageRegister, createNewUser } = require("../controllers/registerController")
 const classeController = require("../controllers/classeController");
+const taskController = require("../controllers/taskController");
 
 
 router.get( // remember that the path needs to be preceded by a '/user'
@@ -26,6 +27,18 @@ router.post("/classes", authCollaborator, classeController.createClass);
 
 // Rota para obter todas as classes com filtros
 router.get("/classes", authCollaborator, classeController.getAllClasses);
+
+router.post("/task", taskController.addTask);
+
+router.put("/edittask/:ID", taskController.editTask);
+
+router.get("/task/:ID_CLASS", taskController.getTasksByClass);
+router.get("/task", taskController.getTasksByStatus);
+
+
+router.delete("/task/:ID", taskController.deleteTask);
+
+router.get("/students/:ID_CLASS", classeController.getAllStudentsOfClass);
 
 
 module.exports = router;

@@ -26,8 +26,8 @@ class StaffDashboardItems {
     DashboardOption(icon: Icons.person_outlined, title: 'Adicionar aluno'),
     DashboardOption(icon: Icons.manage_accounts, title: 'Adicionar administrador'),
 
-    DashboardOption(icon: Icons.add, title: 'Adicionar tarefas'),
-    DashboardOption(icon: Icons.edit, title: 'Editar tarefas'),
+    // DashboardOption(icon: Icons.add, title: 'Adicionar tarefas'),
+    DashboardOption(icon: Icons.edit, title: 'Tarefas da turma'),
     DashboardOption(icon: Icons.view_kanban, title: 'Ver quadro'),
 
 

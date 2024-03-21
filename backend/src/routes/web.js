@@ -9,9 +9,6 @@ const jwt = require('jsonwebtoken')
 let router = express.Router();
 const classeController = require("../controllers/classeController");
 const teachersController = require("../controllers/teachersController")
-// const noteController = require("../controllers/notesController");
-// const eventsController = require("../controllers/eventsController");
-// const mattersController = require("../controllers/mattersController");
 const taskController = require("../controllers/taskController");
 
 initPassportLocal()
@@ -103,10 +100,6 @@ router.put("/teachers/:rateach", teachersController.updateTeacher);
 
 // Rota para excluir uma teacher por RATEACH
 router.delete("/teachers/:rateach", teachersController.deleteTeacher);
-
-
-
-
 
  router.post("/register", auth.validateRegister, createNewUser);
 
