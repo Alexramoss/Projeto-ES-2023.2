@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:eduvision_client/model/board.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskAPIService {
-  final String baseUrl = 'http://localhost:8080';
+  final String baseUrl = 'http://localhost:8080/user';
 
   TaskAPIService();
 
@@ -12,7 +13,7 @@ class TaskAPIService {
     return prefs.getString('token');
   }
 
-  Future<List<dynamic>> getTasksByClass(String idClass) async {
+  Future<List<BoardItemObject>> getTasksByClass(String idClass) async {
     try {
       String? token = await _getToken();
       if (token == null) {
@@ -20,27 +21,39 @@ class TaskAPIService {
         return [];
       }
       final response = await http.get(
-        Uri.parse('$baseUrl/tasks/class/$idClass?secret_token=$token'),
+        Uri.parse('$baseUrl/task/$idClass?secret_token=$token'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
-        return data;
-      } else {
-        print('Request failed with status: ${response.statusCode}');
-        print('Response body: ${response.body}');
+              print('sucesso');
+              print('Response body: ${response.body}');
+
+        // Check if the response body contains the "No tasks found" message
+      if (response.body == '["No tasks found for the provided parameter"]') {
+        print('No tasks found');
         return [];
+      }
+
+
+        List<dynamic> data = jsonDecode(response.body);
+        List<BoardItemObject> tasks = data.map((taskJson) => BoardItemObject.fromJson(taskJson)).toList();
+        print(tasks.first.title);
+
+
+        return tasks;
+      } else {
+        throw Exception('Request failed with status: ${response.statusCode}');
       }
     } catch (error) {
       print('Error: $error');
-      return [];
+      throw Exception('Error fetching tasks: $error');
     }
   }
 
-Future<List<dynamic>> getTasksByStatus(String status) async {
+Future<List<BoardItemObject>> getTasksByStatus(String status) async {
   try {
     String? token = await _getToken();
     if (token == null) {
@@ -48,7 +61,7 @@ Future<List<dynamic>> getTasksByStatus(String status) async {
       return [];
     }
     final response = await http.get(
-      Uri.parse('$baseUrl/tasks/status?secret_token=$token&status=$status'),
+      Uri.parse('$baseUrl/task?secret_token=$token&status=$status'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -56,16 +69,16 @@ Future<List<dynamic>> getTasksByStatus(String status) async {
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
-      return data;
+      List<BoardItemObject> tasks = data.map((taskJson) => BoardItemObject.fromJson(taskJson)).toList();
+
+      return tasks;
     } else {
-      print('Request failed with status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      return [];
+        throw Exception('Request failed with status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Error fetching tasks: $error');
     }
-  } catch (error) {
-    print('Error: $error');
-    return [];
-  }
 }
 
   Future<String> addTask(Map<String, dynamic> taskData) async {
@@ -75,13 +88,18 @@ Future<List<dynamic>> getTasksByStatus(String status) async {
         print('Token is null');
         return 'Token is null';
       }
+    String encodedBody = jsonEncode(taskData);
+
       final response = await http.post(
-        Uri.parse('$baseUrl/tasks?secret_token=$token'),
+        Uri.parse('$baseUrl/task?secret_token=$token'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(taskData),
+        body: encodedBody,
       );
+      print(response.body);
+            print(taskData);
+
 
       if (response.statusCode == 201) {
         return 'Task added successfully';
@@ -104,7 +122,7 @@ Future<List<dynamic>> getTasksByStatus(String status) async {
         return 'Token is null';
       }
       final response = await http.put(
-        Uri.parse('$baseUrl/tasks/$id?secret_token=$token'),
+        Uri.parse('$baseUrl/task/$id?secret_token=$token'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -132,7 +150,7 @@ Future<List<dynamic>> getTasksByStatus(String status) async {
         return 'Token is null';
       }
       final response = await http.delete(
-        Uri.parse('$baseUrl/tasks/$id?secret_token=$token'),
+        Uri.parse('$baseUrl/task/$id?secret_token=$token'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

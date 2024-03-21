@@ -90,7 +90,6 @@ let deleteClass = async (req, res) => {
 let getAllStudentsOfClass = async (req, res) => {
   const { ID_CLASS } = req.params;
   try {
-    console.log(ID_CLASS + "class id controller")
     const students = await classeService.getStudentsFromClass(ID_CLASS);
     if (students) {
       res.json({ students });

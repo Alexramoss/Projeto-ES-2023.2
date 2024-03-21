@@ -28,7 +28,6 @@ let createNewUser = async (data) => {
         let salt = bcryptjs.genSaltSync(10);
 
         let userItem = {
-            id_class: data.idClass,
             fullname: data.fullname,
             email: data.email,
             password: bcryptjs.hashSync(generateRandomNumber().toString(), salt)
@@ -46,6 +45,7 @@ let createNewUser = async (data) => {
             }
             
             if (data.isStudent === "true") {
+                userItem.id_class = data.idClass
                 userItem.RASTUD = randomValue.toString().padStart(5, '0');
             }
 

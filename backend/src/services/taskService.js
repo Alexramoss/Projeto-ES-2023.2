@@ -26,7 +26,7 @@ let getTasksBy = async (paramName, paramValue) => {
         if (results && results.length > 0) {
             return results;
         }
-        return "No tasks found for the provided parameter";
+        return ["No tasks found for the provided parameter"];
     } catch (error) {
         console.log(error);
         throw error;
@@ -39,15 +39,15 @@ let addTask = async (data) => {
 
     let taskItem = {
         ID_CLASS: data.idClass,
-        title: data.title,
-        description: data.description,
-        explanation_title: data.explanationTitle,
-        explanation_description: data.explanationDescription,
-        status: data.status,
+        TITLE: data.title,
+        DESCRIPTION: data.description,
+        EXPLANATION_TITLE: data.explanationTitle,
+        EXPLANATION_DESCRIPTION: data.explanationDescription,
+        STATUS: data.status,
     }
     try {
         let query = 'INSERT INTO TASK SET ?';
-        results = DBConnection.query(query, taskItem);
+        results = await DBConnection.query(query, taskItem);
         return results.insertId;
     } catch (error) {
       throw error;

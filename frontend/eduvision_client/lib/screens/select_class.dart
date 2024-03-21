@@ -1,4 +1,5 @@
-import 'package:eduvision_client/screens/tarefas.dart';
+import 'package:eduvision_client/model/board.dart';
+import 'package:eduvision_client/screens/tasks.dart';
 import 'package:eduvision_client/services/tasks_api_service.dart';
 import 'package:flutter/material.dart';
 import '../model/classes_structure.dart';
@@ -15,6 +16,7 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   bool _showLoading = false;
   List<String> _classList = [];
+  List<BoardItemObject> tasks = [];
 
   @override
   void initState() {
@@ -26,7 +28,7 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar matéria'),
+        title: Text('Escolher turma'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -58,13 +60,7 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
               },
             ),
             SizedBox(height: 16.0),
-            TextField(
-              controller: _fullNameController,
-              decoration: InputDecoration(
-                labelText: 'Nome da disciplina',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            
             SizedBox(height: 32.0),
             Center(
               child: ElevatedButton(
@@ -76,25 +72,31 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
                   String fullName = _fullNameController.text;
                   String? selectedClassId = _selectedClassId;
 
-                    await getTasksByClass(selectedClassId);
+                    // await getTasksByClass(selectedClassId);
+                  String message = await getTasksByClass(_selectedClassId);
 
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('Resultado'),
-                        content: Text("oi"),
+                        content: Text(message),
                         actions: <Widget>[
                           TextButton(
-                            onPressed: () {
-                              
-                              Navigator.of(context).push(
+                            onPressed: () async {
+
+                              if(_selectedClassId != null) {
+                                Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => HandleTasksScreen(),
+                                  builder: (context) => HandleTasksScreen(items: tasks, idClass: _selectedClassId!),
                                 ),
                                );
-                                // Dismiss the AlertDialog
-                              Navigator.of(context).pop();
+                              }
+                                
+                              
+
+                              
+                              
                             },
                             child: Text('OK'),
                           ),
@@ -110,7 +112,7 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
                     _showLoading = false;
                   });
                 },
-                child: Text(_showLoading ? 'Carregando...' : 'Adicionar'),
+                child: Text(_showLoading ? 'Carregando...' : 'Próximo'),
               ),
             ),
           ],
@@ -139,18 +141,22 @@ class _SelectClassScreenState extends State<SelectClassScreen> {
     }
   }
 
-  Future<dynamic> getTasksByClass(String? classId) async {
+  Future<String> getTasksByClass(String? classId) async {
     try {
       // Call the appropriate method to get tasks by class ID
       // Replace 'getTasksByClass' with the appropriate method from your API service
       // and pass the selected class ID
       if (classId == null) {
-        return;
+        return('Escolha uma turma');
       }
-      List<dynamic> message = await TaskAPIService().getTasksByClass(classId!);
-      return message;
+      tasks = await TaskAPIService().getTasksByClass(classId!);
+      if (tasks.isEmpty) {
+      return('Nenhuma tarefa encontrada para essa turma');
+    } else {
+      return('Tarefas encontradas');
+    }
     } catch (error) {
-      return 'Erro: $error';
+      throw 'Erro: $error';
     }
   }
 }

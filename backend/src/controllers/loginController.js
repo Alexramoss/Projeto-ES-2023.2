@@ -1,4 +1,3 @@
-// const { get } = require("express/lib/response");
 
 let getLoginPage = (req, res) => {
     if(req.isAuthenticated()) {
