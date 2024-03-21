@@ -19,7 +19,7 @@
 
 ## Sobre o Projeto:
 
-O Chefinho é um app que tem como objetivo promover o desenvolvimento da autonomia de crianças em idade escolar. Para isso, fornece um serviço capaz de integrar alunos e corpo docente na manutenção do ambiente escolar, promoção do bem estar da comunidade e  na participação ativa no estudante na construção das ações escolares. O projeto foi concebido com base em uma iniciativa pessoal semelhante liderada por Maria Vitória. A partir das especificidades dos requisitos deste projeto, ele foi reestruturado e aprimorado, adaptando-se de forma a atender às suas necessidades específicas desse projeto.
+O Chefinho é um app que tem como objetivo promover o desenvolvimento da autonomia de crianças em idade escolar. Para isso, fornece um serviço capaz de integrar alunos e corpo docente na manutenção do ambiente escolar, promoção do bem estar da comunidade e  na participação ativa no estudante na construção das ações escolares. O projeto foi concebido com base em uma iniciativa pessoal semelhante liderada por Maria Vitória. A partir das especificidades dos requisitos deste projeto, ele foi reestruturado e aprimorado, adaptando-se de forma a atender às suas necessidades específicas.
 
 ## Links de Acompanhamento:
 <a href="https://docs.google.com/document/d/1mTMhLnPbvr6UddJm-UBkjMJnM83Bjlby5gcwEHgpnyY/edit?usp=sharing">Planejamento do Projeto</a>
